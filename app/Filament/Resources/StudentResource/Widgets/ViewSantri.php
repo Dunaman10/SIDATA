@@ -6,7 +6,7 @@ use App\Models\Student;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
-class viewSantri extends BaseWidget
+class ViewSantri extends BaseWidget
 {
   protected function getStats(): array
   {

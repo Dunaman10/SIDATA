@@ -84,7 +84,7 @@
   </nav>
 
   {{-- Hero Section --}}
-  <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('/assets/banner.jpg');">
+  <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('{{ $profile && $profile->banner_image ? asset('storage/' . $profile->banner_image) : asset('assets/banner.jpg') }}');">
      {{-- Overlay --}}
      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-50"></div>
 
@@ -94,10 +94,10 @@
                 Pondok Pesantren Modern & Tahfidz
             </span>
             <h2 class="font-bold text-4xl md:text-6xl lg:text-7xl mb-6 text-white leading-tight" data-aos="fade-up" data-aos-delay="200">
-                Membangun Generasi <br> <span class="text-pink-500">Qur'ani</span> & Berakhlak
+                {{ $profile->title ?? 'Membangun Generasi Qur\'ani & Berakhlak' }}
             </h2>
             <p class="text-gray-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">
-                Lingkungan pendidikan yang menyatukan ilmu agama dan wawasan modern, membekali santri untuk masa depan yang gemilang.
+                {{ $profile->subtitle ?? 'Lingkungan pendidikan yang menyatukan ilmu agama dan wawasan modern, membekali santri untuk masa depan yang gemilang.' }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdWsuLWlCtjpn0UfI1gCFHQsllw0NqIxxpFWgsPJ24gAQMkJw/viewform" target="_blank" class="bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl shadow-pink-600/30 hover:bg-pink-500 hover:scale-105 transition-all duration-300">
@@ -127,7 +127,7 @@
             <h3 class="text-pink-600 font-bold uppercase tracking-wider text-sm mb-2">Tentang Kami</h3>
             <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Mengenal Darut Tafsir</h2>
             <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                Pondok Pesantren Modern dan Tahfidz Al-Qur'an Darut Tafsir hadir sebagai jawaban atas kebutuhan pendidikan Islam yang komprehensif, mencetak kader umat yang intelek dan spiritual.
+                {{ $profile->about ?? 'Pondok Pesantren Modern dan Tahfidz Al-Qur\'an Darut Tafsir hadir sebagai jawaban atas kebutuhan pendidikan Islam yang komprehensif, mencetak kader umat yang intelek dan spiritual.' }}
             </p>
         </div>
 
@@ -139,7 +139,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-4 text-slate-800">Visi Kami</h3>
                 <p class="text-slate-600 leading-relaxed">
-                    Mewujudkan generasi tahfidz muda yang cinta Al-Qur’an, berakhlakul karimah, berwawasan modern, dan mampu mengamalkan nilai-nilai Al-Qur’an dalam kehidupan bermasyarakat.
+                    {{ $profile->vision ?? 'Mewujudkan generasi tahfidz muda yang cinta Al-Qur\'an, berakhlakul karimah, berwawasan modern, dan mampu mengamalkan nilai-nilai Al-Qur\'an dalam kehidupan bermasyarakat.' }}
                 </p>
             </div>
 
@@ -150,7 +150,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-4 text-slate-800">Misi Kami</h3>
                 <p class="text-slate-600 leading-relaxed">
-                    Menyelenggarakan pendidikan tahfidz yang mutqin, menanamkan nilai Al-Qur’an, membentuk karakter disiplin, serta mengintegrasikan wawasan modern agar santri siap menghadapi tantangan zaman.
+                    {{ $profile->mission ?? 'Menyelenggarakan pendidikan tahfidz yang mutqin, menanamkan nilai Al-Qur\'an, membentuk karakter disiplin, serta mengintegrasikan wawasan modern agar santri siap menghadapi tantangan zaman.' }}
                 </p>
             </div>
         </div>
@@ -238,8 +238,8 @@
                     <i class="fa-brands fa-whatsapp text-3xl"></i>
                 </div>
                 <h3 class="font-bold text-lg mb-1">WhatsApp</h3>
-                <p class="text-slate-500 text-sm mb-4">+62 812 1234 4568</p>
-                <a href="https://wa.me/6281212344568" target="_blank" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Chat Sekarang &rarr;</a>
+                <p class="text-slate-500 text-sm mb-4">{{ $profile->phone ?? '+62 812 1234 4568' }}</p>
+                <a href="https://wa.me/{{ str_replace(['+', ' ', '-'], '', $profile->phone ?? '6281212344568') }}" target="_blank" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Chat Sekarang &rarr;</a>
             </div>
 
              {{-- Contact Card 2 --}}
@@ -248,8 +248,8 @@
                     <i class="fa-regular fa-envelope text-3xl"></i>
                 </div>
                 <h3 class="font-bold text-lg mb-1">Email</h3>
-                <p class="text-slate-500 text-sm mb-4">daruttafsir@gmail.com</p>
-                <a href="mailto:daruttafsir@gmail.com" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Kirim Email &rarr;</a>
+                <p class="text-slate-500 text-sm mb-4">{{ $profile->email ?? 'daruttafsir@gmail.com' }}</p>
+                <a href="mailto:{{ $profile->email ?? 'daruttafsir@gmail.com' }}" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Kirim Email &rarr;</a>
             </div>
 
              {{-- Contact Card 3 --}}
@@ -258,8 +258,8 @@
                     <i class="fa-solid fa-location-dot text-3xl"></i>
                 </div>
                 <h3 class="font-bold text-lg mb-1">Lokasi</h3>
-                <p class="text-slate-500 text-sm mb-4">Kabupaten Lebak, Banten</p>
-                <a href="https://goo.gl/maps/xyz" target="_blank" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Lihat Peta &rarr;</a>
+                <p class="text-slate-500 text-sm mb-4">{{ $profile->address ?? 'Kabupaten Lebak, Banten' }}</p>
+                <a href="https://www.google.com/maps/search/{{ urlencode($profile->address ?? 'Kabupaten Lebak, Banten') }}" target="_blank" class="text-pink-600 font-semibold hover:text-pink-700 text-sm">Lihat Peta &rarr;</a>
             </div>
         </div>
 
@@ -276,7 +276,7 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 mb-12">
         <div class="md:w-1/3">
             <div class="flex items-center gap-2 mb-6">
-                <img src="/assets/logo-darutafsir.png" alt="Logo" class="h-10 grayscale brightness-200">
+                <img src="/assets/logo-darutafsir.png" alt="Logo" class="h-10">
                 <span class="text-xl font-bold">Darut Tafsir</span>
             </div>
             <p class="text-slate-400 leading-relaxed text-sm">

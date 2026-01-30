@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  return view('index');
+  $profile = \App\Models\Profile::first();
+  return view('index', compact('profile'));
 })->name('index');
 
 

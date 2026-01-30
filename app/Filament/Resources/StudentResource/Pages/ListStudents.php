@@ -6,7 +6,7 @@ use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Resources\StudentResource;
-use App\Filament\Resources\StudentResource\Widgets\viewSantri;
+use App\Filament\Resources\StudentResource\Widgets\ViewSantri;
 
 class ListStudents extends ListRecords
 {
@@ -24,7 +24,7 @@ class ListStudents extends ListRecords
   protected function getHeaderWidgets(): array
   {
     return [
-      viewSantri::class, ///widget di halaman data santri
+      ViewSantri::class, ///widget di halaman data santri
     ];
   }
 
