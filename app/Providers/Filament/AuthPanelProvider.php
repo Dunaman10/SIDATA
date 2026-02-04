@@ -12,6 +12,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Hardikkhorasiya09\ChangePassword\ChangePasswordPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -33,6 +34,11 @@ class AuthPanelProvider extends PanelProvider
       ->colors([
         'primary' => Color::hex('#E5077C'),
       ])
+      ->plugins(
+        [
+          ChangePasswordPlugin::make(),
+        ]
+      )
       ->discoverResources(in: app_path('Filament/Auth/Resources'), for: 'App\\Filament\\Auth\\Resources')
       ->discoverPages(in: app_path('Filament/Auth/Pages'), for: 'App\\Filament\\Auth\\Pages')
       ->pages([

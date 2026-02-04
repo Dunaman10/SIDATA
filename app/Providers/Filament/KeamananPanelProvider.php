@@ -13,6 +13,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Hardikkhorasiya09\ChangePassword\ChangePasswordPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -34,6 +35,11 @@ class KeamananPanelProvider extends PanelProvider
       ->colors([
         'primary' => Color::hex('#E5077C'),
       ])
+      ->plugins(
+        [
+          ChangePasswordPlugin::make(),
+        ]
+      )
       ->discoverResources(in: app_path('Filament/Keamanan/Resources'), for: 'App\\Filament\\Keamanan\\Resources')
       ->discoverPages(in: app_path('Filament/Keamanan/Pages'), for: 'App\\Filament\\Keamanan\\Pages')
       ->pages([
