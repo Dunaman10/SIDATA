@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Teacher\Resources;
 
-use App\Filament\Resources\ArchiveResource\Pages;
-use App\Filament\Resources\ArchiveResource\RelationManagers;
+use App\Filament\Teacher\Resources\ArchiveResource\Pages;
 use App\Models\Archive;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 
 class ArchiveResource extends Resource
@@ -20,25 +16,19 @@ class ArchiveResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document';
 
-    protected static ?int $navigationSort = 5;
-
     protected static ?string $navigationLabel = 'Arsip';
     protected static ?string $pluralModelLabel = 'Manajemen Arsip';
     protected static ?string $label = 'Manajemen Arsip';
 
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
-        ->columns(1)
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('Judul Arsip')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('file_path')
-                    ->label('File')
-                    ->required(),
-            ]);
+            ->schema([]);
     }
 
     public static function table(Table $table): Table
@@ -62,13 +52,9 @@ class ArchiveResource extends Resource
                             $record->title . '.' . pathinfo($record->file_path, PATHINFO_EXTENSION)
                         );
                     }),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
@@ -83,8 +69,6 @@ class ArchiveResource extends Resource
     {
         return [
             'index' => Pages\ListArchives::route('/'),
-            // 'create' => Pages\CreateArchive::route('/create'),
-            // 'edit' => Pages\EditArchive::route('/{record}/edit'),
         ];
     }
 }
