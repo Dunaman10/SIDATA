@@ -30,6 +30,7 @@ class DataKelasResource extends Resource
   protected static ?string $navigationIcon = 'heroicon-o-user-group';
   protected static ?string $navigationLabel = 'Data Santri';
   protected static ?string $pluralModelLabel = 'Data Santri Anda';
+  protected static ?int $navigationSort = 0;
 
   public static function form(Form $form): Form
   {
@@ -42,6 +43,7 @@ class DataKelasResource extends Resource
   public static function table(Table $table): Table
   {
     return $table
+      ->paginated(false)
       ->columns([
         ImageColumn::make('profile')
           ->label('Foto Santri')
@@ -68,10 +70,9 @@ class DataKelasResource extends Resource
 
       ])
       ->filters([
-        Tables\Filters\SelectFilter::make('class_id')
-          ->label('Pilih Kelas')
-          ->options(Classes::all()->pluck('class_name', 'id'))
-
+        // Tables\Filters\SelectFilter::make('class_id')
+        //   ->label('Pilih Kelas')
+        //   ->options(Classes::all()->pluck('class_name', 'id'))
       ])
       ->actions([
         Tables\Actions\ViewAction::make()

@@ -28,12 +28,13 @@ class AttendanceResource extends Resource
   protected static ?string $pluralModelLabel = 'Kehadiran Santri';
   protected static ?string $label = "Kehadiran";
   protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+  protected static ?int $navigationSort = 1;
 
   // Sembunyikan Resource dari sidebar
-  public static function shouldRegisterNavigation(): bool
-  {
-    return false;
-  }
+  // public static function shouldRegisterNavigation(): bool
+  // {
+  //   return false;
+  // }
 
   public static function form(Form $form): Form
   {

@@ -26,8 +26,10 @@ class RekapNilaiResource extends Resource
   protected static ?string $model = Student::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-  protected static ?string $navigationLabel = 'Rekapitulasi';
+  protected static ?string $navigationLabel = 'Rekapitulasi Nilai';
   protected static ?string $pluralLabel = 'Rekapitulasi Nilai Hafalan Santri';
+  protected static ?int $navigationSort = 5;
+
 
   public static function form(Form $form): Form
   {

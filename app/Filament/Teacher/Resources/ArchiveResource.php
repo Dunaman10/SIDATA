@@ -12,63 +12,65 @@ use Illuminate\Support\Facades\Storage;
 
 class ArchiveResource extends Resource
 {
-    protected static ?string $model = Archive::class;
+  protected static ?string $model = Archive::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document';
+  protected static ?string $navigationIcon = 'heroicon-o-document';
 
-    protected static ?string $navigationLabel = 'Arsip';
-    protected static ?string $pluralModelLabel = 'Manajemen Arsip';
-    protected static ?string $label = 'Manajemen Arsip';
+  protected static ?string $navigationLabel = 'Arsip';
+  protected static ?string $pluralModelLabel = 'Manajemen Arsip';
+  protected static ?string $label = 'Manajemen Arsip';
+  protected static ?int $navigationSort = 3;
 
-    public static function canCreate(): bool
-    {
-        return false;
-    }
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([]);
-    }
+  public static function canCreate(): bool
+  {
+    return false;
+  }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->label('Judul Arsip')
-                    ->searchable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\Action::make('download')
-                    ->label('Download')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(function (Archive $record) {
-                        return Storage::download(
-                            $record->file_path,
-                            $record->title . '.' . pathinfo($record->file_path, PATHINFO_EXTENSION)
-                        );
-                    }),
-            ])
-            ->bulkActions([
-                //
-            ]);
-    }
+  public static function form(Form $form): Form
+  {
+    return $form
+      ->schema([]);
+  }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+  public static function table(Table $table): Table
+  {
+    return $table
+      ->columns([
+        Tables\Columns\TextColumn::make('title')
+          ->label('Judul Arsip')
+          ->searchable(),
+      ])
+      ->filters([
+        //
+      ])
+      ->actions([
+        Tables\Actions\Action::make('download')
+          ->label('Download')
+          ->icon('heroicon-o-arrow-down-tray')
+          ->action(function (Archive $record) {
+            return Storage::download(
+              $record->file_path,
+              $record->title . '.' . pathinfo($record->file_path, PATHINFO_EXTENSION)
+            );
+          }),
+      ])
+      ->bulkActions([
+        //
+      ]);
+  }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListArchives::route('/'),
-        ];
-    }
+  public static function getRelations(): array
+  {
+    return [
+      //
+    ];
+  }
+
+  public static function getPages(): array
+  {
+    return [
+      'index' => Pages\ListArchives::route('/'),
+    ];
+  }
 }

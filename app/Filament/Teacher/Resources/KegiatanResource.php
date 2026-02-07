@@ -26,6 +26,8 @@ class KegiatanResource extends Resource
   protected static ?string $pluralModelLabel = 'Daftar Kegiatan Pondok Pesantren';
   protected static ?string $label = "Kegiatan";
   protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+  protected static ?int $navigationSort = 4;
+
 
   public static function form(Form $form): Form
   {

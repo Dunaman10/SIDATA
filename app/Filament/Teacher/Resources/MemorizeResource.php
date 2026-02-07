@@ -42,6 +42,8 @@ class MemorizeResource extends Resource
   protected static ?string $navigationLabel = 'Setor Hafalan';
   protected static ?string $pluralLabel = 'Setor Hafalan Santri';
   protected static ?string $modelLabel = 'Setoran Hafalan';
+  protected static ?int $navigationSort = 2;
+
 
   // Sembunyikan dari navbar
   // public static function shouldRegisterNavigation(): bool
