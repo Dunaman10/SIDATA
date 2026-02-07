@@ -31,7 +31,7 @@ class UserResource extends Resource
   protected static ?string $navigationIcon = 'heroicon-o-user-group';
   protected static ?string $navigationLabel = 'Pengguna';
   protected static ?string $pluralModelLabel = 'Manajemen Data Pengguna';
-  protected static ?int $navigationSort = 6;
+  protected static ?int $navigationSort = 7;
 
   public static function getEloquentQuery(): Builder
   {

@@ -21,13 +21,14 @@ class MentorStudentResource extends Resource
   protected static ?string $model = MentorStudent::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-users';
-  protected static ?int $navigationSort = 4;
+  protected static ?int $navigationSort = 5;
   protected static ?string $navigationLabel = 'Mentor Santri';
   protected static ?string $pluralModelLabel = 'Manajemen Mentor Santri';
 
   public static function form(Form $form): Form
   {
     return $form
+    ->columns(1)
       ->schema([
 
         Select::make('id_student')
@@ -98,8 +99,8 @@ class MentorStudentResource extends Resource
   {
     return [
       'index' => Pages\ListMentorStudents::route('/'),
-      'create' => Pages\CreateMentorStudent::route('/create'),
-      'edit' => Pages\EditMentorStudent::route('/{record}/edit'),
+      // 'create' => Pages\CreateMentorStudent::route('/create'),
+      // 'edit' => Pages\EditMentorStudent::route('/{record}/edit'),
     ];
   }
 }
