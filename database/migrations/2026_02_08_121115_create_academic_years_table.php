@@ -11,12 +11,11 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('attendances', function (Blueprint $table) {
+    Schema::create('academic_years', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('id_student');
-      $table->foreignId('id_class');
-      $table->date('date');
-      $table->string('status');
+      $table->string('years');
+      $table->enum('semester', ['Ganjil', 'Genap']);
+      $table->boolean('is_active')->default(false); // Hanya satu yang boleh true karena tahub akademik yang aktif hanya satu
       $table->timestamps();
     });
   }
@@ -26,6 +25,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('attendances');
+    Schema::dropIfExists('academic_years');
   }
 };

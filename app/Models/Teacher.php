@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Teacher extends Model
 {
@@ -37,6 +38,15 @@ class Teacher extends Model
     return $this->hasMany(MentorStudent::class, 'id_teacher');
   }
 
+  public function schedules(): HasMany
+  {
+    return $this->hasMany(Schedule::class);
+  }
+
+  public function teachingJournals(): HasMany
+  {
+    return $this->hasMany(TeachingJournal::class);
+  }
 
   protected static function booted()
   {

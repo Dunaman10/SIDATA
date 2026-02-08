@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -29,6 +30,11 @@ class Student extends Model
     return $this->belongsTo(Classes::class, 'class_id');
   }
 
+  public function attendances(): HasMany
+  {
+    return $this->hasMany(StudentAttendance::class);
+  }
+
   public function memorizes()
   {
     return $this->hasMany(Memorize::class, 'id_student')
@@ -40,7 +46,6 @@ class Student extends Model
     return $this->hasOne(Memorize::class, 'id_student')->latestOfMany();
   }
 
-
   public function pembimbing()
   {
     return $this->belongsToMany(
@@ -49,19 +54,6 @@ class Student extends Model
       'id_student',
       'id_teacher'
     );
-  }
-
-  protected static function booted()
-  {
-    static::created(function ($student) {
-      Attendance::firstOrCreate([
-        'id_student' => $student->id,
-        'date' => now()->format('Y-m-d'),
-      ], [
-        'id_class' => $student->class_id,
-        'status' => null,
-      ]);
-    });
   }
 
   // Periode semester berdasarkan setoran terakhir santri
