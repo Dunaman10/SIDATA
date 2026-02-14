@@ -9,8 +9,8 @@ class Schedule extends Model
 {
   protected $fillable = [
     'academic_year_id',
-    'classroom_id',
-    'subject_id',
+    'classes_id',
+    'lesson_id',
     'teacher_id',
     'day_of_week',
     'start_time',
