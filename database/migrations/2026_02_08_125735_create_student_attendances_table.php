@@ -16,6 +16,7 @@ return new class extends Migration
       $table->foreignId('teaching_journal_id')->constrained()->cascadeOnDelete();
       $table->foreignId('student_id')->constrained()->cascadeOnDelete();
       $table->enum('status', ['Hadir', 'Izin', 'Sakit', 'Alfa']);
+      $table->boolean('is_substitute')->default(false);
       $table->text('notes')->nullable();
       $table->timestamps();
     });

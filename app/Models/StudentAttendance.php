@@ -11,6 +11,7 @@ class StudentAttendance extends Model
     'teaching_journal_id',
     'student_id',
     'status',
+    'is_substitute',
     'notes',
   ];
 

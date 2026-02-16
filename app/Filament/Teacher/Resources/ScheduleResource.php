@@ -37,16 +37,20 @@ class ScheduleResource extends Resource
       ->columns([
         TextColumn::make('day_of_week')
           ->label('Hari'),
+
         TextColumn::make('classes.class_name')
           ->label('Kelas'),
+
         TextColumn::make('start_time')
           ->label('Jam Mulai')
           ->alignCenter()
           ->formatStateUsing(fn($state) => date('H:i', strtotime($state))),
+
         TextColumn::make('end_time')
           ->label('Jam Selesai')
           ->alignCenter()
           ->formatStateUsing(fn($state) => date('H:i', strtotime($state))),
+
         TextColumn::make('lesson.name')
           ->label('Mata Pelajaran'),
       ])

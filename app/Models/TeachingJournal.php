@@ -23,7 +23,7 @@ class TeachingJournal extends Model
 
   protected $casts = [
     'date' => 'date',
-    'started_at' => 'datetime', // atau 'immutable_time' tergantung format DB
+    'started_at' => 'datetime',
     'ended_at' => 'datetime',
   ];
 
