@@ -18,7 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
     //
   })
   ->withSchedule(function (Schedule $schedule): void {
-    $schedule->command('app:generate-daily-attendance')->dailyAt('00:00');
     $schedule->command('app:clean-old-hafalan-audio')->weeklyOn(7, '00:00');
     // $schedule->command('app:clean-old-hafalan-audio')->everyMinute();
   })

@@ -68,7 +68,7 @@ class ScheduleResource extends Resource
             'Selasa' => 'Selasa',
             'Rabu' => 'Rabu',
             'Kamis' => 'Kamis',
-            'Jumat' => 'Jumat',
+            "Jum'at" => "Jum'at",
             'Sabtu' => 'Sabtu',
           ]),
 

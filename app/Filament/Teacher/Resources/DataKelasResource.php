@@ -119,8 +119,6 @@ class DataKelasResource extends Resource
     return parent::getEloquentQuery()->whereIn('id', $studentIds);
   }
 
-
-
   public static function infolist(Infolist $infolist): Infolist
   {
     return $infolist
