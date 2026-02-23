@@ -41,6 +41,7 @@ class KegiatanResource extends Resource
               ->placeholder('Masukkan nama kegiatan'),
             Textarea::make('description')
               ->label('Deskripsi')
+              ->required()
               ->placeholder('Masukkan deskripsi kegiatan'),
             DatePicker::make('activity_date')
               ->label('Tanggal Kegiatan')

@@ -18,3 +18,6 @@ Route::get('/', function () {
 
 Route::get('/rekap/{student}/pdf', [\App\Http\Controllers\RekapPdfController::class, 'export'])
   ->name('rekap.pdf');
+
+Route::get('/rekap-presensi/{student}/pdf', [\App\Http\Controllers\RekapPresensiPdfController::class, 'export'])
+  ->name('rekap-presensi.pdf');
