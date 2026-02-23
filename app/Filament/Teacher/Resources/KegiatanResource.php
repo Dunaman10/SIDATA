@@ -3,7 +3,6 @@
 namespace App\Filament\Teacher\Resources;
 
 use App\Filament\Teacher\Resources\KegiatanResource\Pages;
-use App\Filament\Teacher\Resources\KegiatanResource\RelationManagers;
 use App\Models\Activity;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
@@ -15,8 +14,6 @@ use Filament\Tables;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class KegiatanResource extends Resource
 {
