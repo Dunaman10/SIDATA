@@ -31,7 +31,12 @@ class ScheduleResource extends Resource
       ->schema([
         Select::make('academic_year_id')
           ->label('Tahun Akademik')
-          ->relationship('academicYear', 'years')
+          ->relationship(
+            'academicYear',
+            'years',
+            modifyQueryUsing: fn($query) => $query->where('is_active', true)
+          )
+          ->getOptionLabelFromRecordUsing(fn($record) => $record->years . ' - ' . ucfirst($record->semester))
           ->placeholder('Pilih Tahun Akademik')
           ->required(),
 

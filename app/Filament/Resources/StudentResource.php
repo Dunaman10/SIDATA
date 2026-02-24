@@ -42,6 +42,7 @@ class StudentResource extends Resource
   public static function form(Form $form): Form
   {
     return $form
+      ->columns(1)
       ->schema([
         TextInput::make('student_name')
           ->label('Nama Santri')
@@ -155,8 +156,8 @@ class StudentResource extends Resource
   {
     return [
       'index' => Pages\ListStudents::route('/'),
-      'create' => Pages\CreateStudent::route('/create'),
-      'edit' => Pages\EditStudent::route('/{record}/edit'),
+      // 'create' => Pages\CreateStudent::route('/create'),
+      // 'edit' => Pages\EditStudent::route('/{record}/edit'),
     ];
   }
 

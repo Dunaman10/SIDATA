@@ -42,6 +42,7 @@ class UserResource extends Resource
   public static function form(Form $form): Form
   {
     return $form
+      ->columns(1)
       ->schema([
         TextInput::make('name')
           ->required()
@@ -55,15 +56,18 @@ class UserResource extends Resource
 
         TextInput::make('phone')
           ->label('Nomor Telepon')
-          ->required()
           ->numeric()
-          ->placeholder('masukkan nomor whatsapp')
-          ->hint('mulai dari angka 62, contoh: 628123456789'),
+          ->required()
+          ->tel()
+          ->rule('regex:/^[0-9]+$/')
+          ->placeholder('masukkan nomor whatsapp'),
 
         TextInput::make('password')
-          ->required()
           ->password()
-          ->revealable(),
+          ->revealable()
+          ->required(fn(string $operation): bool => $operation === 'create')
+          ->dehydrateStateUsing(fn($state) => filled($state) ? bcrypt($state) : null)
+          ->dehydrated(fn($state) => filled($state)),
 
         Select::make('role_id')
           ->label('Role')
@@ -98,11 +102,6 @@ class UserResource extends Resource
           ->searchable(),
         TextColumn::make('phone')
           ->label('Nomor Telepon')
-          ->formatStateUsing(function ($state) {
-            if (!$state) return '-';
-            $state = preg_replace('/\D/', '', $state);
-            return preg_replace('/(\d{2})(\d{4})(\d{4})(\d+)/', '$1 $2 $3 $4', $state);
-          })
           ->searchable(),
 
         TextColumn::make('role.role_name')
@@ -151,8 +150,8 @@ class UserResource extends Resource
   {
     return [
       'index' => Pages\ListUsers::route('/'),
-      'create' => Pages\CreateUser::route('/create'),
-      'edit' => Pages\EditUser::route('/{record}/edit'),
+      // 'create' => Pages\CreateUser::route('/create'),
+      // 'edit' => Pages\EditUser::route('/{record}/edit'),
     ];
   }
 

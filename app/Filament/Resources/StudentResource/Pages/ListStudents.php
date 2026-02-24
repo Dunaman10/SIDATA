@@ -16,9 +16,7 @@ class ListStudents extends ListRecords
   {
     return [
       Actions\CreateAction::make('create')
-        ->label('Tambah Santri')
-        ->outlined()
-        ->color('gray'),
+        ->label('Tambah Santri'),
     ];
   }
   protected function getHeaderWidgets(): array
