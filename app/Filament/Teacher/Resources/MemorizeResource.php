@@ -4,20 +4,15 @@ namespace App\Filament\Teacher\Resources;
 
 use App\Filament\Teacher\Resources\MemorizeResource\Pages;
 use App\Forms\Components\AudioRecorder;
-use App\Models\ClassTeacher;
 use App\Models\Memorize;
 use App\Models\MentorStudent;
 use App\Models\Surah;
-use DateTime;
-use Dom\Text;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\View;
@@ -27,12 +22,8 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Infolist;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use PhpParser\Node\Stmt\Label;
 
 class MemorizeResource extends Resource
 {
