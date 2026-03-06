@@ -21,9 +21,10 @@ class ProfileResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-building-library';
   protected static ?string $navigationLabel = 'Profil Pondok';
+  protected static ?string $navigationGroup = 'Manajemen Operasional';
   protected static ?string $pluralModelLabel = 'Profil Pondok';
   protected static ?string $label = 'Profil Pondok';
-  protected static ?int $navigationSort = 0;
+  protected static ?int $navigationSort = 3;
 
   public static function form(Form $form): Form
   {

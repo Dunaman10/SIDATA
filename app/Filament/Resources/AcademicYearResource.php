@@ -18,6 +18,8 @@ class AcademicYearResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-clock';
   protected static ?string $navigationLabel = 'Tahun Akademik';
+  protected static ?string $navigationGroup = 'Akademik dan KBM';
+  protected static ?int $navigationSort = 1;
   protected static ?string $pluralModelLabel = 'Tahun Akademik';
   protected static ?string $label = 'Tahun Akademik';
 

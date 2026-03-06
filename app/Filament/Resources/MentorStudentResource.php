@@ -21,8 +21,9 @@ class MentorStudentResource extends Resource
   protected static ?string $model = MentorStudent::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-users';
-  protected static ?int $navigationSort = 5;
+  protected static ?int $navigationSort = 2;
   protected static ?string $navigationLabel = 'Mentor Santri';
+  protected static ?string $navigationGroup = 'Tahfidz dan Kepesantrenan';
   protected static ?string $pluralModelLabel = 'Manajemen Mentor Santri';
 
   public static function form(Form $form): Form

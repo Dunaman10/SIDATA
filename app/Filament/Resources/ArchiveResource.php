@@ -19,10 +19,9 @@ class ArchiveResource extends Resource
   protected static ?string $model = Archive::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-document';
-
-  protected static ?int $navigationSort = 6;
-
+  protected static ?int $navigationSort = 5;
   protected static ?string $navigationLabel = 'Arsip';
+  protected static ?string $navigationGroup = 'Manajemen Operasional';
   protected static ?string $pluralModelLabel = 'Manajemen Arsip';
   protected static ?string $label = 'Manajemen Arsip';
 

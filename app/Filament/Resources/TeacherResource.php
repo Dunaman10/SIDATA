@@ -24,6 +24,7 @@ class TeacherResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-user-group';
   protected static ?string $navigationLabel = 'Asatidz';
+  protected static ?string $navigationGroup = 'Manajemen Operasional';
   protected static ?string $pluralModelLabel = 'Manajemen Asatidz';
   protected static ?int $navigationSort = 2;
 

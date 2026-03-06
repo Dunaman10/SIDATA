@@ -17,8 +17,9 @@ class LessonResource extends Resource
   protected static ?string $model = Lesson::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-book-open';
-
   protected static ?string $navigationLabel = 'Mata Pelajaran';
+  protected static ?string $navigationGroup = 'Akademik dan KBM';
+  protected static ?int $navigationSort = 3;
   protected static ?string $pluralModelLabel = 'Mata Pelajaran';
   protected static ?string $label = 'Mata Pelajaran';
 

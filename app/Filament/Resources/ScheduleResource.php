@@ -21,6 +21,8 @@ class ScheduleResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-calendar';
   protected static ?string $navigationLabel = 'Penjadwalan';
+  protected static ?string $navigationGroup = 'Akademik dan KBM';
+  protected static ?int $navigationSort = 2;
   protected static ?string $pluralModelLabel = 'Penjadwalan';
   protected static ?string $label = 'Penjadwalan';
 

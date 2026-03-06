@@ -25,8 +25,9 @@ class CertificateResource extends Resource
   protected static ?string $model = Certificate::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-document-text';
-  protected static ?int $navigationSort = 6;
+  protected static ?int $navigationSort = 4;
   protected static ?string $navigationLabel = 'Sertifikat';
+  protected static ?string $navigationGroup = 'Tahfidz dan Kepesantrenan';
   protected static ?string $pluralModelLabel = 'Manajemen Sertifikat';
   protected static ?string $label = 'Manajemen Sertifikat';
 

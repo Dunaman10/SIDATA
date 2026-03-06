@@ -19,9 +19,10 @@ class MemorizeResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-archive-box-arrow-down';
   protected static ?string $navigationLabel = 'Arsip Hafalan';
+  protected static ?string $navigationGroup = 'Tahfidz dan Kepesantrenan';
   protected static ?string $pluralLabel = 'Arsip Hafalan Santri';
   protected static ?string $modelLabel = 'Arsip Hafalan';
-  protected static ?int $navigationSort = 3;
+  protected static ?int $navigationSort = 1;
 
   public static function canCreate(): bool
   {
