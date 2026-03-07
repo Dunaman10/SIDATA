@@ -1,0 +1,38 @@
+name: Deploy Daruttafsir Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            # Masuk ke folder root project di server (sesuaikan nama folder jika bukan daruttafsir)
+            cd /home/u751837275/domains/santriqu.id/public_html/daruttafsir
+            
+            # Mode maintenance saat proses deploy
+            php artisan down || true
+            
+            # Tarik pull terbaru dari branch main
+            git pull origin main
+            
+            # Install dependency PHP tanpa dependensi dev
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+            
+            # Install Node \& Build Assets (Vite/Tailwind)
+            npm install
+            npm run build
+            
+            # Bersihkan dan buat ulang cache laravel
+            php artisan optimize:clear
+            php artisan optimize
