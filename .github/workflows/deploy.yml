@@ -23,15 +23,10 @@ jobs:
             # Mode maintenance saat proses deploy
             php artisan down || true
             
-            # Tarik pull terbaru dari branch main
             git pull origin main
-            
-            # Install dependency PHP tanpa dependensi dev
-            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-            
-            # Install Node \& Build Assets (Vite/Tailwind)
-            npm install
-            npm run build
+            /opt/php83/bin/php /usr/local/bin/composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+            /opt/php83/bin/php artisan migrate --force
+            /opt/php83/bin/php artisan optimize:clear
             
             # Bersihkan dan buat ulang cache laravel
             php artisan optimize:clear
