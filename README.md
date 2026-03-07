@@ -2,7 +2,7 @@
   <img src="public/assets/logo-darutafsir.png" alt="Logo Daruttafsir" width="180">
 </p>
 
-<h1 align="center">SITAHFIDZ — Sistem Informasi Tahfidz Daruttafsir</h1>
+<h1 align="center">SIDATA — Sistem Informasi Darut Tafsir</h1>
 
 <p align="center">
   Sistem informasi manajemen pesantren tahfidz berbasis web untuk mengelola kegiatan akademik, hafalan Al-Qur'an, dan administrasi pesantren secara digital.
@@ -20,7 +20,7 @@
 
 ## 📖 Tentang Project
 
-**SITAHFIDZ (Sistem Informasi Tahfidz)** adalah aplikasi web yang dirancang khusus untuk membantu pengelolaan pesantren tahfidz **Daruttafsir**. Aplikasi ini menyediakan platform terpadu yang menghubungkan seluruh elemen pesantren — mulai dari admin, guru/ustadz, orang tua santri, hingga petugas keamanan — dalam satu ekosistem digital yang terintegrasi.
+**SIDATA (Sistem Informasi Darut Tafsir)** adalah aplikasi web yang dirancang khusus untuk membantu pengelolaan pesantren tahfidz **Daruttafsir**. Aplikasi ini menyediakan platform terpadu yang menghubungkan seluruh elemen pesantren — mulai dari admin, guru/ustadz, orang tua santri, hingga petugas keamanan — dalam satu ekosistem digital yang terintegrasi.
 
 Sistem ini mencakup pengelolaan data santri, pencatatan setoran hafalan Al-Qur'an beserta penilaian tajwid (Makharijul Huruf, Shifatul Huruf, Ahkamul Qiroat, Ahkamul Waqfi, Qowaid Tafsir, dan Tarjamatul Ayat), manajemen jadwal pelajaran, jurnal pengajaran, absensi, perizinan santri, hingga penerbitan sertifikat.
 
@@ -38,7 +38,7 @@ Pengelolaan pesantren tahfidz secara konvensional menghadapi berbagai tantangan,
 | 👨‍👩‍👧 Keterbatasan informasi orang tua | Orang tua kesulitan memantau perkembangan hafalan, nilai, dan kehadiran anaknya secara real-time |
 | 🔒 Perizinan tidak terdokumentasi | Proses izin keluar/masuk santri tidak tercatat dengan baik oleh petugas keamanan |
 
-**SITAHFIDZ** hadir sebagai solusi untuk mendigitalisasi seluruh proses tersebut, sehingga:
+**SIDATA** hadir sebagai solusi untuk mendigitalisasi seluruh proses tersebut, sehingga:
 
 - ✅ **Efisiensi Operasional** — Seluruh pencatatan dan administrasi dilakukan secara digital, mengurangi beban kerja manual.
 - ✅ **Akurasi Data** — Data tersimpan secara terpusat di database, mengurangi risiko human error dan kehilangan data.
