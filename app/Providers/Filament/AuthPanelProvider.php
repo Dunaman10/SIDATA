@@ -64,7 +64,10 @@ class AuthPanelProvider extends PanelProvider
       ->renderHook(
         'panels::auth.login.form.after',
         fn() => new HtmlString('
-          <div class="flex items-center justify-center w-full mt-4">
+          <div class="flex flex-col items-center w-full mt-4 gap-3">
+            <a href="/lupa-password" class="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300 transition-colors duration-200">
+              Lupa Password?
+            </a>
             <a href="/" class="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors duration-200">
               <span>&larr;</span>
               <span>Kembali ke Beranda</span>

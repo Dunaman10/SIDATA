@@ -100,7 +100,7 @@
                 {{ $profile->subtitle ?? 'Lingkungan pendidikan yang menyatukan ilmu agama dan wawasan modern, membekali santri untuk masa depan yang gemilang.' }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdWsuLWlCtjpn0UfI1gCFHQsllw0NqIxxpFWgsPJ24gAQMkJw/viewform" target="_blank" class="bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl shadow-pink-600/30 hover:bg-pink-500 hover:scale-105 transition-all duration-300">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeghouUPy5pk6_iaUeVt-0uPNND_HPErnZhORLbMqtG9_NgaA/viewform?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcARFg49leHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAac4SyMOvUVbNjNjNwxuZiRRNurGXfhhYoGK2izkPPbTLcBRlHItDU6Co5TLJg_aem_vEMR4eFBMUoik9JSclLhFw" target="_blank" class="bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl shadow-pink-600/30 hover:bg-pink-500 hover:scale-105 transition-all duration-300">
                     Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
                 </a>
                 <a href="#about" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/20 transition-all duration-300">

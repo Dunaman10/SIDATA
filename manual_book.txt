@@ -1,0 +1,216 @@
+Bagian I: Informasi Proyek dan Pendahuluan 
+
+1. Halaman Judul 
+• Judul Project Work: Sistem Informasi Darut Tafsir (SIDATA)
+• Tim Proyek/Nama Mahasiswa: Syarif Hidayatullah
+• Pembimbing/Dosen Pengampu: [Nama Dosen/Pembimbing]
+• Institusi/Departemen: Teknik Informatika
+
+YAYASAN SASMITA JAYA 
+UNIVERSITAS PAMULANG 
+SK MENDIKNAS NO. 136/D/0/2001 
+Jl. Raya Puspiptek No.46, Buaran, Kec. Serpong, Kota Tangerang Selatan, Banten 15310 – 
+Tanggerang, Banten Telp./Fax. (021) 741 2566 
+
+2. Daftar Isi dan Daftar Gambar/Tabel 
+Daftar Isi:
+Bagian I: Informasi Proyek dan Pendahuluan ........................ 1
+1. Halaman Judul .................................................. 1
+2. Daftar Isi dan Daftar Gambar/Tabel ........................... 1
+3. Ringkasan Eksekutif (Executive Summary) ...................... 2
+4. Latar Belakang dan Tujuan Proyek .............................. 2
+Bagian II: Desain dan Pengembangan Proyek ......................... 3
+5. Metodologi dan Proses Kerja .................................... 3
+6. Desain Solusi (Arsitektur) ..................................... 3
+7. Pengujian dan Hasil ............................................ 4
+Bagian III: Panduan Penggunaan Hasil Proyek ....................... 5
+8. Persyaratan Sistem dan Penyiapan Awal ........................ 5
+9. Panduan Pengoperasian Dasar .................................... 6
+10. Fitur Lanjutan dan Administrasi ............................... 7
+Bagian IV: Pemecahan Masalah dan Penutup .......................... 8
+11. Pemecahan Masalah (Troubleshooting) ........................... 8
+12. Kesimpulan dan Pengembangan Lanjutan (Future Work) ............ 9
+Lampiran (Jika Diperlukan) ........................................ 10
+
+Daftar Gambar/Tabel:
+Gambar 1. Arsitektur Sistem (MVC) ................................. 3
+Gambar 2. Dashboard Admin ......................................... 6
+Tabel 1. Kebutuhan Perangkat Lunak ................................ 5
+
+3. Ringkasan Eksekutif (Executive Summary) 
+SIDATA (Sistem Informasi Darut Tafsir) adalah aplikasi web yang dirancang khusus untuk mendigitalisasi pengelolaan pesantren tahfidz Daruttafsir. Sistem ini menyediakan platform terpadu yang menghubungkan admin, guru/ustadz, orang tua santri, dan petugas keamanan dalam satu ekosistem digital. Hasil utama dari proyek ini adalah aplikasi yang dapat mencatat setoran hafalan secara terpusat, menilai tajwid dengan standar yang terukur, mengelola administrasi yang terintegrasi, serta memberikan transparansi informasi secara real-time kepada orang tua santri.
+
+4. Latar Belakang dan Tujuan Proyek 
+• Latar Belakang Masalah: 
+Pengelolaan pesantren tahfidz secara konvensional menghadapi berbagai tantangan, antara lain: pencatatan hafalan manual yang rentan hilang, penilaian tajwid (makharijul huruf, shifatul huruf, dll) yang tidak terstandar dan kurang terdokumentasi, administrasi data akademik yang tersebar, kesulitan orang tua dalam memantau perkembangan anak, dan perizinan keluar/masuk santri yang tidak tercatat secara historis oleh pihak keamanan.
+• Tujuan Proyek: 
+Membangun Sistem Informasi (SIDATA) untuk mendigitalisasi proses pengelolaan akademik dan operasional tahfidz, meningkatkan efisiensi administrasi hingga memudahkan pelacakan rekam data santri, serta memberikan akses transparansi informasi bagi staf, guru, dan orang tua santri.
+• Ruang Lingkup Proyek: 
+Sistem mencakup manajemen multi-role (Admin, Guru, Orang Tua, Keamanan), pengelolaan data santri, pencatatan setoran hafalan (dengan parameter penilaian tajwid), fitur perizinan, pengelolaan jadwal, fitur jurnal pengajaran, serta pembuatan rekapitulasi nilai dan presensi. Output berupa aplikasi web-based (SaaS approach).
+
+Bagian II: Desain dan Pengembangan Proyek 
+
+5. Metodologi dan Proses Kerja 
+• Metodologi yang Digunakan: Agile Development, dipilih karena fleksibilitasnya dalam mengadaptasi perubahan kebutuhan sistem dari pihak pesantren secara berulang (iteratif) pada setiap tahapan rilis fitur.
+• Alur Kerja Proyek: 
+- Perencanaan: Analisis masalah, pengumpulan kebutuhan pengguna (Admin, Guru, Wali, Keamanan).
+- Desain: Merancang ERD basis data, struktur Role-Based Access Control (RBAC), dan User Interface/UX menggunakan framework TailwindCSS.
+- Implementasi: Coding backend dan frontend secara bersamaan menggunakan teknologi TALL stack (Tailwind, Alpine, Laravel, Livewire/Filament).
+- Pengujian: Melakukan Blackbox testing dan UAT untuk seluruh fitur krusial.
+
+6. Desain Solusi (Arsitektur) 
+• Arsitektur Sistem: Sistem menggunakan pola asritektur MVC (Model-View-Controller) bawaan dari framework Laravel. 
+• Teknologi yang Digunakan: 
+- Backend Framework: Laravel 12.x
+- Admin Panel: Filament PHP 3.x
+- Bahasa Pemrograman: PHP 8.2+
+- Styling/Frontend: TailwindCSS 4.x, Vite 6.x
+- Database: SQLite / MySQL
+- Tambahan: Filament Apex Charts (Grafik) & Laravel-DomPDF (Laporan).
+• Desain Basis Data: 
+Menggunakan skema relasional dengan 29 tabel secara keseluruhan. Tabel inti antara lain:
+- Modul Pengguna: `users`, `roles`.
+- Modul Akademik: `students`, `teachers`, `classes`, `schedules`.
+- Modul Tahfidz: `memorizes`, `surahs`, `targets`.
+- Modul Kehadiran & Izin: `student_attendances`, `permissions`.
+
+7. Pengujian dan Hasil 
+• Strategi Pengujian: Pengujian Blackbox (terhadap fungsionalitas aplikasi, manajemen data pengguna, dan fungsi komputasi nilai hafalan) serta User Acceptance Testing (Integrasi UAT antara panel Admin, Guru, Wali, dan Satpam).
+• Ringkasan Hasil Pengujian: Secara umum menunjukkan 100% fungsionalitas berjalan secara stabil, otentikasi role berhasil membatasi hak akses pada masing-masing scope, performa dashboard lancar, dan proses pemanggilan laporan dalam format PDF berfungsi normal.
+
+Bagian III: Panduan Penggunaan Hasil Proyek 
+
+8. Persyaratan Sistem dan Penyiapan Awal 
+• Persyaratan Teknis: 
+- Sistem Operasi Terdukung: Windows, macOS, atau Linux (Ubuntu dll).
+- PHP Version >= 8.2
+- Web Server Lokal/Production: Nginx/Apache (Lebih mudah menggunakan Laravel Herd).
+- Dependencies: Composer, Node.js & NPM terinstal.
+- Koneksi internet dan web browser versi terkini (Chrome/Edge/Firefox).
+• Prosedur Instalasi/Deployment: 
+1. `git clone` repository project ini ke environment lokal/server Anda.
+2. Unduh dan pasang dependensi backend dengan perintah `composer install`.
+3. Pasang dependensi frontend menggunakan `npm install`.
+4. Salin file environment: `cp .env.example .env` lalu konfigurasikan akses ke Database (DB_CONNECTION, DB_DATABASE, dll) di file `.env`.
+5. Eksekusi `php artisan key:generate`.
+6. Eksekusi database file `php artisan migrate` disusul dengan `php artisan db:seed` (bila memerlukan data awal).
+7. Konfigurasikan file sistem lokal dengan `php artisan storage:link`.
+8. Render asset tampilan dengan perintah `npm run build`.
+9. `php artisan serve` untuk menjalankan web (mengakses di http://127.0.0.1:8000).
+
+9. Panduan Pengoperasian Dasar 
+• Akses Awal: 
+Buka browser lalu masuk ke halaman login di rute: `/auth/login`. Setelah input email/password, pengguna akan diarahkan ke panel spesifik:
+- `/admin` (Dasbor Administrator)
+- `/teacher` (Dasbor Guru)
+- `/parent` (Dasbor Orang Tua)
+- `/keamanan` (Dasbor Security).
+• Antarmuka Pengguna (UI) Overview: 
+Dashboard memiliki bilah menu navigasi di sisi kiri, area statistik widget (Chart) dan ringkasan data di tengah layar, dan menu bar header berisi tombol profile, Notifikasi, dan Log Out.
+• Skenario Penggunaan Utama: 
+o Prosedur 1: Proses Input Penilaian Hafalan (Guru)
+  1. Login menggunakan akun Role Guru.
+  2. Buka menu samping, pilih menu `Tahfidz` lalu klik `Setoran Hafalan`.
+  3. Klik `Create` (Tambah Data).
+  4. Pilih Santri, masukkan detail surah/ayat, masukkan kriteria penilaian tajwid, lalu simpan (Create).
+o Prosedur 2: Memantau Progres Hafalan Anak (Orang Tua)
+  1. Login dengan akun Role Orang Tua.
+  2. Buka menu `Riwayat Setoran` atau `Nilai Santri`.
+  3. Panel akan otomatis hanya menampilkan rekam jejak progres hafalan yang merujuk pada identitas anak/santri yang terkait.
+
+10. Fitur Lanjutan dan Administrasi 
+• Pengaturan Kustomisasi: Administrator berhak mengolah halaman muka pesantren (Landing Page module) lewat menu admin.
+• Manajemen Pengguna: Administrator dapat membekukan, menambah, atau merotasi otorisasi User melaui tab Role Management dan Users Management.
+• Pemeliharaan Dasar: Selalu perhatikan perintah `php artisan optimize:clear` untuk membersihkan penumpukan cache pada server. Sangat disarankan untuk malakukan duplikasi database/backup terjadwal secara berkala untuk menghindari corrupt data.
+
+Bagian IV: Pemecahan Masalah dan Penutup 
+
+11. Pemecahan Masalah (Troubleshooting) 
+• Masalah Umum dan Solusi: 
+  o Gejala: Aplikasi kehilangan layout gambarnya, ataupun cetak bukti laporan / avatar 404 (Tidak Ditemukan).
+  o Penyebab yang Mungkin: Symlink untuk storage pada framework Laravel terputus.
+  o Solusi: Di console/terminal server jalankan `php artisan storage:link`.
+  
+  o Gejala: Modul PDF gagal di generate.
+  o Penyebab yang Mungkin: Ekstensi library pada OS belum dinyalakan.
+  o Solusi: Cek bahwa module php-gd telah di enable via `php.ini`.
+• Pesan Kesalahan (Error Messages): 
+  - "SQLSTATE[HY000] [2002] Connection refused" -> Ini berarti database system belum distart atau kredensial `.env` Anda tidak cocok.
+  - "403 Forbidden" -> Anda mencoba untuk mengakses URL/modul diluar otorisasi Role akun yang tertera, silahkan kembali ke Dashboard dan akses menu valid Anda.
+
+12. Kesimpulan dan Pengembangan Lanjutan (Future Work) 
+• Kesimpulan: Keseluruhan fungsionalitas manajemen pesantren dari pencatatan setoran tahfidz, manajemen kurikulum, pengawasan wali santri hingga permohonan penjagaan izin terlaksana dengan baik pada SIDATA. Digitalisasi berjalan mencapai ekspektasi solusi permasalahan awal.
+• Rekomendasi Pengembangan Lanjutan: Target di iterasi berikutnya adalah pengembangan antarmuka porting (API) berfokus untuk implementasi pembuatan aplikasi native di Android (Mobile App) yang mengakomodasi sistem push-notification ke smartphone pengguna utamanya untuk pemberitahuan kedatangan/kepulangan anak terhadap para orang tua.
+
+Lampiran
+
+• Lampiran A: Struktur Kode Sumber Kunci (Filament Multi-Panel)
+Sistem SIDATA menggunakan fitur Multi-Tenancy / Multi-Panel dari Filament PHP untuk memisahkan antarmuka berdasarkan role pengguna. Konfigurasi setiap panel dikelola secara independen pada folder `app/Providers/Filament/`.
+
+Berikut adalah ringkasan potongan kode sumber kunci (core snippet) pembagian panel, yang berfokus pada pengaturan ID, Path URL, pemisahan folder Resources, serta proteksi keamanan melalui custom Middleware. 
+
+1. AdminPanelProvider (`app/Providers/Filament/AdminPanelProvider.php`):
+   Pemetaan panel `admin` untuk mengelola master data, dengan proteksi akses menggunakan middleware khusus `OnlyAdmin`.
+   ```php
+   public function panel(Panel $panel): Panel {
+       return $panel
+           ->id('admin')
+           ->path('admin')
+           ->login()
+           ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+           ->middleware([
+               // ... middleware standar laravel lainnya ...
+               OnlyAdmin::class, // Middleware Khusus Autentikasi Super Admin
+           ]);
+   }
+   ```
+
+2. TeacherPanelProvider (`app/Providers/Filament/TeacherPanelProvider.php`):
+   Pemetaan panel `teacher` di mana folder file resources diisolasi dari panel admin, serta diproteksi dengan `OnlyTeacher`.
+   ```php
+   public function panel(Panel $panel): Panel {
+       return $panel
+           ->id('teacher')
+           ->path('teacher')
+           ->login()
+           ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\\Filament\\Teacher\\Resources')
+           ->middleware([
+               // ... middleware standar laravel lainnya ...
+               OnlyTeacher::class, // Middleware Khusus Autentikasi Pengguna Guru
+           ]);
+   }
+   ```
+*(Pendekatan pengisolasian kode resources dan middleware yang serupa juga diimplementasikan pada `ParentPanelProvider` dan `SecurityPanelProvider` untuk mencakup seluruh scope entitas pengguna sistem).*
+
+• Lampiran B: Panduan Lanjutan Instalasi Dependency Utama
+Selain dependensi standar Laravel, SIDATA sangat bergantung pada library tambahan untuk menangani pelaporan PDF dan chart visual. Berikut adalah instruksi konfigurasinya:
+1. Laravel DomPDF (`barryvdh/laravel-dompdf`)
+   - Fungsi Utama: Merender halaman HTML (blade) menjadi berkas PDF, digunakan mencetak Rekap Rapor Hafalan dan Surat Pengantar Izin.
+   - Perintah Instalasi: Jalankan `composer require barryvdh/laravel-dompdf` pada terminal.
+   - Konfigurasi Tambahan: Agar bisa digunakan lewat Facade, Anda bisa mempublikasikan konfigurasinya dengan `php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"` lalu mengatur default font atau ukuran kertas pada file `config/dompdf.php`.
+2. Filament Apex Charts (`leandrocfe/filament-apex-charts`)
+   - Fungsi Utama: Menyediakan grafik interaktif (Line Chart, Pie Chart) di dashboard, seperti memvisualisasikan tren setoran harian setiap kelas.
+   - Perintah Instalasi: `composer require leandrocfe/filament-apex-charts`.
+   - Konfigurasi Tambahan: Lakukan publikasi aset chart dengan perintah `php artisan filament-apex-charts:install`, setelah itu wajib mengkompilasi file resource dengan `npm run build` sehingga grafik dapat ter-render oleh browser.
+
+• Lampiran C: Daftar Istilah (Glossary)
+Istilah Teknis (IT):
+- TALL Stack: Kerangka kerja (framework) antarmuka yang sangat padu di ekosistem Laravel, terdiri atas Tailwind CSS, Alpine.js, Laravel, dan Livewire.
+- Filament PHP: Kumpulan alat dan pembuat antarmuka admin dinamis (CMS) bawaan Laravel yang berbasis TALL stack.
+- MVC (Model-View-Controller): Pola arsitektur pengembangan web yang memisahkan logika data dari database (Model), presentasi ke pengguna (View), dan pemroses alur logika (Controller).
+- RBAC (Role-Based Access Control): Mekanisme keamanan untuk melakukan blokade atau pemberian akses sistem berdasarkan jenis Peran/Role milik login user.
+- UAT (User Acceptance Testing): Tahapan akhir pengetesan di mana sistem diuji coba langsung ke pengguna sebenarnya.
+
+Istilah Domain Pesantren & SIDATA:
+- SIDATA: Singkatan dari "Sistem Informasi Darut Tafsir", yang merupakan nama dari proyek/aplikasi ini.
+- Tahfidz: Disiplin ilmu agama berupa kemampuan menghafalkan Al-Qur'an secara sempurna.
+- Makharijul Huruf: Ilmu tajwid mengenai titik asal tempat keluarnya bunyi huruf abjad Arab (Hijaiyah).
+- Shifatul Huruf: Karakteristik atau sifat sebuah huruf saat dibunyikan sehingga dapat dibedakan dengan huruf lainnya meskipun memiliki makharijul huruf yang sama.
+
+
+“Selamat Mengerjakan, Semoga Sukses” 
+YAYASAN SASMITA JAYA 
+UNIVERSITAS PAMULANG 
+SK MENDIKNAS NO. 136/D/0/2001 
+Jl. Raya Puspiptek No.46, Buaran, Kec. Serpong, Kota Tangerang Selatan, Banten 15310 – 
+Tanggerang, Banten Telp./Fax. (021) 741 2566
