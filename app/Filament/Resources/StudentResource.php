@@ -49,6 +49,7 @@ class StudentResource extends Resource
           ->label('NISN')
           ->required()
           ->numeric()
+          ->unique(ignoreRecord: true)
           ->placeholder('Masukkan NISN santri'),
 
         TextInput::make('student_name')
