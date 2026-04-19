@@ -14,6 +14,7 @@ class Student extends Model
   public $timestamps = false;
   protected $fillable = [
     'student_name',
+    'nisn',
     'parent',
     'class_id',
     'profile',

@@ -13,6 +13,7 @@ return new class extends Migration
   {
     Schema::create('students', function (Blueprint $table) {
       $table->id();
+      $table->string('nisn', 10)->unique();
       $table->string('student_name');
       $table->foreignId('parent');
       $table->foreignId('class_id');

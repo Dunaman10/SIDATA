@@ -45,6 +45,12 @@ class StudentResource extends Resource
     return $form
       ->columns(1)
       ->schema([
+        TextInput::make('nisn')
+          ->label('NISN')
+          ->required()
+          ->numeric()
+          ->placeholder('Masukkan NISN santri'),
+
         TextInput::make('student_name')
           ->label('Nama Santri')
           ->required()
@@ -73,7 +79,6 @@ class StudentResource extends Resource
         FileUpload::make('profile')
           ->label('Profil')
           ->image()
-          ->required()
           ->disk('public')
           ->directory('profile')
           ->visibility('public')
@@ -95,7 +100,12 @@ class StudentResource extends Resource
         ImageColumn::make('profile')
           ->label('Foto Profil')
           ->disk('public') // Sesuaikan dengan disk tempat file disimpan
+          ->defaultImageUrl(asset('assets/default_pp.jpg'))
           ->circular(),
+
+        TextColumn::make('nisn')
+          ->label('NISN')
+          ->searchable(),
 
         TextColumn::make('student_name')
           ->label('Nama Santri')

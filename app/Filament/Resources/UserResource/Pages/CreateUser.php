@@ -57,11 +57,11 @@ class CreateUser extends CreateRecord
       ->color('primary');
   }
 
-  protected function getCreateAnotherFormAction(): Action
-  {
-    return Action::make('createAnother')
-      ->hidden();
-  }
+  // protected function getCreateAnotherFormAction(): Action
+  // {
+  //   return Action::make('createAnother')
+  //     ->hidden();
+  // }
 
   protected function getCreatedNotification(): ?Notification
   {
