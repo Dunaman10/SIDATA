@@ -3,12 +3,7 @@
 namespace App\Filament\Teacher\Resources;
 
 use App\Filament\Teacher\Resources\RekapNilaiResource\Pages;
-use App\Filament\Teacher\Resources\RekapNilaiResource\RelationManagers;
-use App\Models\RekapNilai;
 use App\Models\Student;
-use Filament\Forms;
-use Filament\Infolists\Components\Grid;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -18,15 +13,13 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RekapNilaiResource extends Resource
 {
   protected static ?string $model = Student::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-  protected static ?string $navigationLabel = 'Rekapitulasi Nilai';
+  protected static ?string $navigationLabel = 'Rekapitulasi Nilai Hafalan';
   protected static ?string $pluralLabel = 'Rekapitulasi Nilai Hafalan Santri';
   protected static ?int $navigationSort = 5;
 
@@ -42,7 +35,12 @@ class RekapNilaiResource extends Resource
   public static function table(Table $table): Table
   {
     return $table
-      ->query(fn() => Student::with('memorizes'))
+      ->query(
+        fn() => Student::with('memorizes')
+          ->whereHas('pembimbing', function (Builder $query) {
+            $query->where('id_users', auth()->id());
+          })
+      )
       ->columns([
         TextColumn::make('student_name')
           ->label('Nama Santri')
@@ -78,7 +76,7 @@ class RekapNilaiResource extends Resource
         // Tables\Actions\EditAction::make(),
         Tables\Actions\ViewAction::make(),
         Tables\Actions\Action::make('exportPdf')
-          ->label('Export PDF')
+          ->label('Download Rekap (1 Semester)')
           ->icon('heroicon-o-arrow-down-tray')
           ->url(fn(Student $record) => route('rekap.pdf', $record->id))
           ->openUrlInNewTab(),
