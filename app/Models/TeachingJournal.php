@@ -42,6 +42,11 @@ class TeachingJournal extends Model
     return $this->belongsTo(Lesson::class);
   }
 
+  public function schedule(): BelongsTo
+  {
+    return $this->belongsTo(Schedule::class);
+  }
+
   // Relasi ke detail kehadiran siswa
   public function studentAttendances(): HasMany
   {

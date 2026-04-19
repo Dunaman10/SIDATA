@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Filament\Teacher\Resources\RekapPresensiResource;
+use App\Models\AcademicYear;
 use App\Models\Student;
 use App\Models\StudentAttendance;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -12,35 +12,25 @@ class RekapPresensiPdfController extends Controller
 {
   public function export(Request $request, Student $student)
   {
-    $semesterParam = $request->query('semester');
-
-    $from = null;
-    $until = null;
+    $academicYearId = $request->query('academic_year_id');
     $periode = 'Semua Periode';
-
-    if ($semesterParam) {
-      $range = RekapPresensiResource::getDateRangeFromSemester($semesterParam);
-      $from = $range['from'];
-      $until = $range['until'];
-
-      [$semester, $year] = explode('|', $semesterParam);
-      if ($semester == '1') {
-        $periode = "Semester 1 — Juli - Desember {$year}";
-      } else {
-        $periode = "Semester 2 — Januari - Juni {$year}";
-      }
-    }
+    $academicYear = null;
 
     // Build query for attendance data
     $attendanceQuery = StudentAttendance::where('student_id', $student->id)
       ->with(['teachingJournal.lesson', 'teachingJournal.classes']);
 
-    // Apply date filters
-    if ($from && $until) {
-      $attendanceQuery->whereHas('teachingJournal', function ($q) use ($from, $until) {
-        $q->whereDate('date', '>=', $from)
-          ->whereDate('date', '<=', $until);
-      });
+    // Apply filter berdasarkan tahun akademik jika dipilih
+    if ($academicYearId) {
+      $academicYear = AcademicYear::find($academicYearId);
+
+      if ($academicYear) {
+        $periode = $academicYear->years . ' — ' . ucfirst($academicYear->semester);
+
+        $attendanceQuery->whereHas('teachingJournal', function ($q) use ($academicYear) {
+          $q->whereHas('schedule', fn($sq) => $sq->where('academic_year_id', $academicYear->id));
+        });
+      }
     }
 
     $attendances = $attendanceQuery->get();
@@ -54,23 +44,28 @@ class RekapPresensiPdfController extends Controller
       'total' => $attendances->count(),
     ];
 
+    $persentaseHadir = $summary['total'] > 0
+      ? round(($summary['hadir'] / $summary['total']) * 100, 1)
+      : 0;
+
     // Detail attendance sorted by date
     $details = $attendances->sortBy(function ($att) {
       return $att->teachingJournal->date;
     })->map(function ($att) {
       return [
-        'date'    => $att->teachingJournal->date->format('d M Y'),
-        'lesson'  => optional($att->teachingJournal->lesson)->name ?? '-',
-        'class'   => optional($att->teachingJournal->classes)->class_name ?? '-',
-        'status'  => $att->status,
+        'date'   => $att->teachingJournal->date->format('d M Y'),
+        'lesson' => optional($att->teachingJournal->lesson)->name ?? '-',
+        'class'  => optional($att->teachingJournal->classes)->class_name ?? '-',
+        'status' => $att->status,
       ];
     });
 
     $data = [
-      'student'  => $student,
-      'summary'  => $summary,
-      'details'  => $details,
-      'periode'  => $periode,
+      'student'          => $student,
+      'summary'          => $summary,
+      'details'          => $details,
+      'periode'          => $periode,
+      'persentaseHadir'  => $persentaseHadir,
     ];
 
     $pdf = Pdf::loadView('pdf.rekap-presensi', $data)

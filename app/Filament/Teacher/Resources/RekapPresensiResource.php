@@ -3,24 +3,24 @@
 namespace App\Filament\Teacher\Resources;
 
 use App\Filament\Teacher\Resources\RekapPresensiResource\Pages;
+use App\Models\AcademicYear;
 use App\Models\Classes;
+use App\Models\Schedule;
 use App\Models\Student;
-use App\Models\StudentAttendance;
 use App\Models\Teacher;
-use Carbon\Carbon;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Select;
 
 class RekapPresensiResource extends Resource
 {
-  protected static ?string $model = Student::class;
+  // Model: Classes — satu baris = satu kelas yang diajar guru
+  protected static ?string $model = Classes::class;
 
   protected static ?string $navigationIcon = 'heroicon-o-document-chart-bar';
   protected static ?string $navigationLabel = 'Rekapitulasi Presensi';
@@ -29,41 +29,11 @@ class RekapPresensiResource extends Resource
   protected static ?string $slug = 'rekap-presensis';
 
   /**
-   * Generate semester options dynamically
-   * Format: "semester|year" => "Label"
+   * Ambil teacher model yang sedang login.
    */
-  protected static function getSemesterOptions(): array
+  protected static function getTeacher(): ?Teacher
   {
-    $currentYear = now()->year;
-
-    return [
-      "1|{$currentYear}" => "Semester 1 — Juli - Desember {$currentYear}",
-      "2|{$currentYear}" => "Semester 2 — Januari - Juni {$currentYear}",
-      "1|" . ($currentYear - 1) => "Semester 1 — Juli - Desember " . ($currentYear - 1),
-      "2|" . ($currentYear - 1) => "Semester 2 — Januari - Juni " . ($currentYear - 1),
-    ];
-  }
-
-  /**
-   * Get date range from semester value
-   * Semester 1: Juli (7) - Desember (12)
-   * Semester 2: Januari (1) - Juni (6)
-   */
-  public static function getDateRangeFromSemester(string $semesterValue): array
-  {
-    [$semester, $year] = explode('|', $semesterValue);
-
-    if ($semester == '1') {
-      return [
-        'from'  => Carbon::create($year, 7, 1)->startOfDay(),
-        'until' => Carbon::create($year, 12, 31)->endOfDay(),
-      ];
-    }
-
-    return [
-      'from'  => Carbon::create($year, 1, 1)->startOfDay(),
-      'until' => Carbon::create($year, 6, 30)->endOfDay(),
-    ];
+    return Teacher::where('id_users', Auth::id())->first();
   }
 
   public static function form(Form $form): Form
@@ -74,142 +44,96 @@ class RekapPresensiResource extends Resource
   public static function table(Table $table): Table
   {
     return $table
-      ->query(function () {
-        $teacher = Teacher::where('id_users', Auth::id())->first();
+      ->query(function (): Builder {
+        $teacher = self::getTeacher();
+        if (!$teacher) {
+          return Classes::query()->whereRaw('1 = 0');
+        }
 
-        return Student::query()
-          ->whereHas('attendances.teachingJournal', function (Builder $query) use ($teacher) {
-            $query->where('teacher_id', $teacher?->id);
-          });
+        // Hanya tampilkan kelas-kelas yang diajar guru ini (dari tabel schedules)
+        $classIds = Schedule::where('teacher_id', $teacher->id)
+          ->distinct()
+          ->pluck('classes_id');
+
+        return Classes::query()
+          ->whereIn('id', $classIds)
+          ->withCount(['students']) // total santri di kelas
+          ->orderBy('class_name');
       })
       ->columns([
-        TextColumn::make('student_name')
-          ->label('Nama Santri')
+        TextColumn::make('class_name')
+          ->label('Nama Kelas')
+          ->sortable()
           ->searchable()
-          ->sortable(),
+          ->weight('bold')
+          ->icon('heroicon-o-academic-cap'),
 
-        TextColumn::make('class.class_name')
-          ->label('Kelas')
-          ->sortable(),
-
-        TextColumn::make('total_hadir')
-          ->label('Hadir')
+        TextColumn::make('students_count')
+          ->label('Total Santri')
           ->alignCenter()
-          ->getStateUsing(function (Student $record) {
-            return self::getAttendanceCount($record, 'Hadir');
-          })
           ->badge()
-          ->color('success'),
+          ->color('info')
+          ->suffix(' santri'),
 
-        TextColumn::make('total_izin')
-          ->label('Izin')
-          ->alignCenter()
-          ->getStateUsing(function (Student $record) {
-            return self::getAttendanceCount($record, 'Izin');
-          })
-          ->badge()
-          ->color('warning'),
+        TextColumn::make('mata_pelajaran')
+          ->label('Mata Pelajaran')
+          ->getStateUsing(function (Classes $record): string {
+            $teacher = self::getTeacher();
+            if (!$teacher) return '-';
 
-        TextColumn::make('total_sakit')
-          ->label('Sakit')
-          ->alignCenter()
-          ->getStateUsing(function (Student $record) {
-            return self::getAttendanceCount($record, 'Sakit');
-          })
-          ->badge()
-          ->color('info'),
+            $pelajaran = Schedule::where('teacher_id', $teacher->id)
+              ->where('classes_id', $record->id)
+              ->with('lesson')
+              ->get()
+              ->pluck('lesson.name')
+              ->filter()
+              ->unique()
+              ->implode(', ');
 
-        TextColumn::make('total_alfa')
-          ->label('Alfa')
-          ->alignCenter()
-          ->getStateUsing(function (Student $record) {
-            return self::getAttendanceCount($record, 'Alfa');
+            return $pelajaran ?: '-';
           })
-          ->badge()
-          ->color('danger'),
+          ->wrap(),
       ])
       ->filters([
-        SelectFilter::make('class_id')
-          ->label('Kelas')
-          ->options(function () {
-            $teacher = Teacher::where('id_users', Auth::id())->first();
-            if (!$teacher) return [];
-
-            $classIds = \App\Models\Schedule::where('teacher_id', $teacher->id)
-              ->distinct()
-              ->pluck('classes_id');
-
-            return Classes::whereIn('id', $classIds)
-              ->orderBy('class_name')
-              ->pluck('class_name', 'id');
-          })
-          ->query(function (Builder $query, array $data): Builder {
-            if (!$data['value']) return $query;
-            return $query->where('class_id', $data['value']);
-          }),
-
-        SelectFilter::make('semester')
-          ->label('Semester')
-          ->options(self::getSemesterOptions())
-          ->query(function (Builder $query, array $data): Builder {
-            if (!$data['value']) return $query;
-
-            $range = self::getDateRangeFromSemester($data['value']);
-
-            return $query->whereHas('attendances.teachingJournal', function (Builder $q) use ($range) {
-              $q->whereDate('date', '>=', $range['from'])
-                ->whereDate('date', '<=', $range['until']);
-            });
-          })
-          ->indicateUsing(function (array $data): ?string {
-            if (!$data['value']) return null;
-            $options = self::getSemesterOptions();
-            return $options[$data['value']] ?? null;
-          }),
+        //
       ])
       ->actions([
-        Tables\Actions\Action::make('exportPdf')
-          ->label('Download PDF')
+        Tables\Actions\Action::make('downloadRekap')
+          ->label('Download Rekap PDF')
           ->icon('heroicon-o-arrow-down-tray')
+          ->color('success')
+          ->modalHeading('Download Rekap Presensi Kelas')
+          ->modalDescription(fn(Classes $record) => 'Download rekap presensi seluruh santri di ' . $record->class_name . '.')
+          ->modalSubmitActionLabel('Download PDF')
           ->form([
-            Select::make('semester')
-              ->label('Semester')
-              ->options(self::getSemesterOptions())
+            Select::make('academic_year_id')
+              ->label('Tahun Akademik')
+              ->options(function () {
+                return AcademicYear::orderByDesc('years')
+                  ->get()
+                  ->mapWithKeys(fn($ay) => [
+                    $ay->id => $ay->years . ' — ' . ucfirst($ay->semester),
+                  ])
+                  ->toArray();
+              })
+              ->default(fn() => AcademicYear::where('is_active', true)->value('id'))
               ->required()
-              ->helperText('Semester 1: Juli - Desember | Semester 2: Januari - Juni'),
+              ->helperText('Pilih tahun akademik untuk rekap presensi.'),
           ])
-          ->action(function (Student $record, array $data, $livewire) {
+          ->action(function (Classes $record, array $data, $livewire) {
+            $teacher = self::getTeacher();
             $params = [
-              'student'  => $record->id,
-              'semester' => $data['semester'],
+              'academic_year_id' => $data['academic_year_id'],
+              'teacher_id'       => $teacher?->id,
             ];
 
-            $url = route('rekap-presensi.pdf', $params);
+            $url = route('rekap-presensi-kelas.pdf', ['class' => $record->id]) . '?' . http_build_query($params);
             $livewire->js("window.open('{$url}', '_blank')");
-          })
-          ->modalHeading('Export PDF Presensi')
-          ->modalDescription('Pilih semester untuk laporan presensi')
-          ->modalSubmitActionLabel('Download PDF')
-          ->color('success'),
+          }),
       ])
       ->bulkActions([])
-      ->defaultSort('student_name');
-  }
-
-  /**
-   * Count attendance by status for a student
-   */
-  protected static function getAttendanceCount(Student $record, string $status): int
-  {
-    $teacher = Teacher::where('id_users', Auth::id())->first();
-
-    $query = StudentAttendance::where('student_id', $record->id)
-      ->where('status', $status)
-      ->whereHas('teachingJournal', function (Builder $q) use ($teacher) {
-        $q->where('teacher_id', $teacher?->id);
-      });
-
-    return $query->count();
+      ->emptyStateHeading('Belum ada kelas yang diajarkan')
+      ->emptyStateDescription('Kelas akan muncul setelah jadwal mengajar Anda ditambahkan.');
   }
 
   public static function getRelations(): array

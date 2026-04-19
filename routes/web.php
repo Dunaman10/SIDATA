@@ -33,3 +33,8 @@ Route::get('/rekap/{student}/pdf', [\App\Http\Controllers\RekapPdfController::cl
 
 Route::get('/rekap-presensi/{student}/pdf', [\App\Http\Controllers\RekapPresensiPdfController::class, 'export'])
   ->name('rekap-presensi.pdf');
+
+// Rekap presensi seluruh santri per kelas (PDF)
+Route::get('/rekap-presensi-kelas/{class}/pdf', [\App\Http\Controllers\RekapPresensiKelasPdfController::class, 'export'])
+  ->name('rekap-presensi-kelas.pdf');
+

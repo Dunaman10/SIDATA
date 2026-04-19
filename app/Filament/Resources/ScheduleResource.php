@@ -82,11 +82,13 @@ class ScheduleResource extends Resource
         TimePicker::make('start_time')
           ->label('Jam Mulai')
           ->required()
+          ->seconds(false)
           ->placeholder('HH:MM'),
 
         TimePicker::make('end_time')
           ->label('Jam Selesai')
           ->required()
+          ->seconds(false)
           ->placeholder('HH:MM'),
 
       ]);

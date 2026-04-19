@@ -4,6 +4,7 @@ namespace App\Filament\Teacher\Resources;
 
 use App\Filament\Teacher\Resources\TeachingJournalResource\Pages;
 use App\Models\Classes;
+use App\Models\Lesson;
 use App\Models\Schedule;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -65,8 +66,9 @@ class TeachingJournalResource extends Resource
               ->dehydrated(false)
               ->live()
               ->afterStateUpdated(function (Set $set) {
-                // Reset pilihan kelas & attendance saat toggle berubah
+                // Reset pilihan kelas, pelajaran & attendance saat toggle berubah
                 $set('classes_id', null);
+                $set('lesson_id', null);
                 $set('attendance', []);
               }),
 
@@ -99,12 +101,26 @@ class TeachingJournalResource extends Resource
                   ->orderBy('class_name')
                   ->pluck('class_name', 'id');
               })
-              ->afterStateUpdated(function (?string $state, Set $set) {
+              ->afterStateUpdated(function (?string $state, Set $set, Get $get) {
                 if (!$state) {
+                  $set('lesson_id', null);
                   $set('attendance', []);
                   return;
                 }
 
+                // Auto-set mata pelajaran dari jadwal (hanya jika bukan guru pengganti)
+                $isSubstitute = $get('is_substitute');
+                if (!$isSubstitute) {
+                  $teacher = Teacher::where('id_users', Auth::id())->first();
+                  $schedule = Schedule::where('teacher_id', $teacher?->id)
+                    ->where('classes_id', $state)
+                    ->with('lesson')
+                    ->first();
+
+                  $set('lesson_id', $schedule?->lesson_id);
+                }
+
+                // Isi daftar santri untuk presensi
                 $students = Student::where('class_id', $state)
                   ->orderBy('student_name')
                   ->get();
@@ -112,9 +128,9 @@ class TeachingJournalResource extends Resource
                 $attendanceData = [];
                 foreach ($students as $student) {
                   $attendanceData[] = [
-                    'student_id' => (string) $student->id,
+                    'student_id'   => (string) $student->id,
                     'student_name' => $student->student_name,
-                    'status' => 'Hadir',
+                    'status'       => 'Hadir',
                   ];
                 }
 
@@ -122,13 +138,23 @@ class TeachingJournalResource extends Resource
               }),
 
             Select::make('lesson_id')
-              ->relationship('lesson', 'name')
               ->label('Mata Pelajaran')
-              ->required(),
+              ->required()
+              ->live()
+              ->disabled(fn(Get $get): bool => !$get('is_substitute'))
+              ->dehydrated(true)
+              ->helperText(fn(Get $get): string => !$get('is_substitute')
+                ? 'Mata pelajaran otomatis diisi dari jadwal mengajar Anda.'
+                : 'Silakan pilih mata pelajaran.')
+              // Selalu return semua lessons sebagai options agar label nilai
+              // yang di-set otomatis via $set() bisa tampil untuk kelas apapun.
+              // Nilai yang benar sudah dikontrol oleh afterStateUpdated di classes_id.
+              ->options(fn() => Lesson::orderBy('name')->pluck('name', 'id')),
           ]),
 
         // Presensi Siswa
         Section::make('Presensi Siswa')
+          ->description('Tandai status kehadiran setiap santri. Default semua santri adalah Hadir — ubah status bagi yang tidak hadir.')
           ->schema([
             Repeater::make('attendance')
               ->label('')
@@ -188,6 +214,17 @@ class TeachingJournalResource extends Resource
         TextColumn::make('topic')
           ->label('Topik')
           ->limit(40),
+
+        TextColumn::make('jumlah_hadir')
+          ->label('Santri Hadir')
+          ->alignCenter()
+          ->getStateUsing(function ($record) {
+            return $record->studentAttendances()->where('status', 'Hadir')->count()
+              . ' / '
+              . $record->studentAttendances()->count();
+          })
+          ->badge()
+          ->color('success'),
       ])
       ->filters([
         //
