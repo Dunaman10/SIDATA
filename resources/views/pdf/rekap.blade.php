@@ -161,8 +161,60 @@
         </tbody>
     </table>
 
+    <!-- BAGIAN 4: RINCIAN SETORAN HAFALAN -->
+    <div style="page-break-inside: avoid;">
+        <div class="section-title">Riwayat Setoran (1 Semester Terakhir)</div>
+        <div style="font-size: 9px; margin-top: -5px; margin-bottom: 8px; color: #555;">
+            *Keterangan: M.H = Makharijul Huruf, S.H = Shifatul Huruf, A.Q = Ahkamul Qiroat, A.W = Ahkamul Waqfi, Q.T = Qowaid Tafsir, T.A = Tarjamatul Ayat
+        </div>
+        <table class="data-table" style="font-size: 10px;">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 20px;">No</th>
+                    <th rowspan="2">Tanggal</th>
+                    <th rowspan="2">Juz</th>
+                    <th rowspan="2">Surah</th>
+                    <th rowspan="2">Ayat</th>
+                    <th colspan="4">Tahsinul Qiroat</th>
+                    <th colspan="2">Pemahaman Tafsir</th>
+                    <th rowspan="2">Nilai<br>Akhir</th>
+                </tr>
+                <tr>
+                    <th style="width: 25px;">M.H</th>
+                    <th style="width: 25px;">S.H</th>
+                    <th style="width: 25px;">A.Q</th>
+                    <th style="width: 25px;">A.W</th>
+                    <th style="width: 25px;">Q.T</th>
+                    <th style="width: 25px;">T.A</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($memorizes as $index => $memorize)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ \Carbon\Carbon::parse($memorize->created_at)->format('d/m/Y') }}</td>
+                    <td>{{ $memorize->juz }}</td>
+                    <td>{{ optional($memorize->surah)->surah_name }}</td>
+                    <td>{{ $memorize->from }} - {{ $memorize->to }}</td>
+                    <td>{{ $memorize->makharijul_huruf ?? '-' }}</td>
+                    <td>{{ $memorize->shifatul_huruf ?? '-' }}</td>
+                    <td>{{ $memorize->ahkamul_qiroat ?? '-' }}</td>
+                    <td>{{ $memorize->ahkamul_waqfi ?? '-' }}</td>
+                    <td>{{ $memorize->qowaid_tafsir ?? '-' }}</td>
+                    <td>{{ $memorize->tarjamatul_ayat ?? '-' }}</td>
+                    <td><strong>{{ $memorize->nilai_avg ?? '-' }}</strong></td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="12" style="padding: 10px;">Belum ada riwayat setoran pada periode ini.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
     <!-- TANDA TANGAN -->
-    <div class="signature">
+    <div class="signature" style="page-break-inside: avoid;">
         <div><strong>Guru Pembimbing</strong></div>
         <div style="margin-top: 60px;">
             <strong>{{ optional($student->pembimbing->first())->user->name }}</strong>

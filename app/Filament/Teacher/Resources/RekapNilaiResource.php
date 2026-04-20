@@ -13,6 +13,7 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class RekapNilaiResource extends Resource
 {
@@ -76,7 +77,7 @@ class RekapNilaiResource extends Resource
         // Tables\Actions\EditAction::make(),
         Tables\Actions\ViewAction::make(),
         Tables\Actions\Action::make('exportPdf')
-          ->label('Download Rekap (1 Semester)')
+          ->label('Download')
           ->icon('heroicon-o-arrow-down-tray')
           ->url(fn(Student $record) => route('rekap.pdf', $record->id))
           ->openUrlInNewTab(),

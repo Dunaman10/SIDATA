@@ -99,7 +99,7 @@ class RekapPresensiResource extends Resource
       ])
       ->actions([
         Tables\Actions\Action::make('downloadRekap')
-          ->label('Download Rekap PDF')
+          ->label('Download')
           ->icon('heroicon-o-arrow-down-tray')
           ->color('success')
           ->modalHeading('Download Rekap Presensi Kelas')

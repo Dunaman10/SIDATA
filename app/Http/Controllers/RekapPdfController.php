@@ -12,7 +12,10 @@ class RekapPdfController extends Controller
     $data = [
       'student' => $student,
       'periode' => $student->periode, // accessor yg udah kita bikin
-      'memorizes' => $student->memorizes()->get(),
+      'memorizes' => $student->memorizes()
+        ->with('surah')
+        ->where('created_at', '>=', now()->subMonths(6))
+        ->get(),
     ];
 
     $pdf = Pdf::loadView('pdf.rekap', $data)
