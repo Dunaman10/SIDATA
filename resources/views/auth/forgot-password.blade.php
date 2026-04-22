@@ -1,6 +1,17 @@
 @extends('layouts.auth-simple', ['title' => 'Lupa Password'])
 
 @section('content')
+<style>
+    /* Hilangkan panah (spinner) pada input type number */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield; /* Untuk browser Firefox */
+    }
+</style>
 <div class="card">
     <div class="steps">
         <div class="step active"></div>
@@ -20,7 +31,7 @@
         <div class="form-group">
             <label class="form-label" for="phone">Nomor WhatsApp</label>
             <input
-                type="text"
+                type="number"
                 id="phone"
                 name="phone"
                 class="form-input"
