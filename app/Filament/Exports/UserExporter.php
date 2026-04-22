@@ -14,9 +14,14 @@ class UserExporter extends Exporter
   public static function getColumns(): array
   {
     return [
-      ExportColumn::make('name'),
-      ExportColumn::make('email'),
-      ExportColumn::make('role.role_name'),
+      ExportColumn::make('name')
+        ->label('Nama'),
+      ExportColumn::make('email')
+        ->label('Email'),
+      ExportColumn::make('phone')
+        ->label('No Telepon'),
+      ExportColumn::make('role.role_name')
+        ->label('Role'),
     ];
   }
 

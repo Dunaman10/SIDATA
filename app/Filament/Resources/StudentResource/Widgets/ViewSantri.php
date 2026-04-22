@@ -8,6 +8,8 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class ViewSantri extends BaseWidget
 {
+  protected static ?string $pollingInterval = null;
+
   protected function getStats(): array
   {
     $countSantri = Student::count();

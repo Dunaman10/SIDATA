@@ -20,6 +20,8 @@ class ActivityExporter extends Exporter
         ->label('Deskripsi'),
       ExportColumn::make('activity_date')
         ->label('Tanggal Kegiatan'),
+      ExportColumn::make('keterangan')
+        ->label('Keterangan'),
     ];
   }
 
