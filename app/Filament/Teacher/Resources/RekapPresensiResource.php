@@ -103,27 +103,23 @@ class RekapPresensiResource extends Resource
           ->icon('heroicon-o-arrow-down-tray')
           ->color('success')
           ->modalHeading('Download Rekap Presensi Kelas')
-          ->modalDescription(fn(Classes $record) => 'Download rekap presensi seluruh santri di ' . $record->class_name . '.')
+          ->modalDescription(fn(Classes $record) => 'Download rekap presensi (tahun akademik aktif) seluruh santri di ' . $record->class_name . '?')
           ->modalSubmitActionLabel('Download PDF')
-          ->form([
-            Select::make('academic_year_id')
-              ->label('Tahun Akademik')
-              ->options(function () {
-                return AcademicYear::orderByDesc('years')
-                  ->get()
-                  ->mapWithKeys(fn($ay) => [
-                    $ay->id => $ay->years . ' — ' . ucfirst($ay->semester),
-                  ])
-                  ->toArray();
-              })
-              ->default(fn() => AcademicYear::where('is_active', true)->value('id'))
-              ->required()
-              ->helperText('Pilih tahun akademik untuk rekap presensi.'),
-          ])
-          ->action(function (Classes $record, array $data, $livewire) {
+          ->action(function (Classes $record, $livewire) {
             $teacher = self::getTeacher();
+            $activeYearId = AcademicYear::where('is_active', true)->value('id');
+
+            if (!$activeYearId) {
+                \Filament\Notifications\Notification::make()
+                    ->title('Gagal')
+                    ->body('Tidak ada Tahun Akademik yang berstatus Aktif. Silakan hubungi Admin.')
+                    ->danger()
+                    ->send();
+                return;
+            }
+
             $params = [
-              'academic_year_id' => $data['academic_year_id'],
+              'academic_year_id' => $activeYearId,
               'teacher_id'       => $teacher?->id,
             ];
 

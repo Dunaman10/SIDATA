@@ -20,4 +20,13 @@ class AcademicYear extends Model
   {
     return $query->where('is_active', true);
   }
+
+  protected static function booted()
+  {
+    static::saving(function ($academicYear) {
+      if ($academicYear->is_active) {
+        AcademicYear::where('id', '!=', $academicYear->id)->update(['is_active' => false]);
+      }
+    });
+  }
 }
