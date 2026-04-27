@@ -130,7 +130,7 @@
             width: 180px;
         }
         .signature-line {
-            margin-top: 55px;
+            margin-top: 100px;
             border-top: 1px solid #333;
             padding-top: 4px;
             font-weight: bold;
@@ -157,7 +157,7 @@
         }
         .summary-cell {
             display: table-cell;
-            text-align: center;
+            text-align: right;
             padding: 8px 12px;
             border-right: 1px solid #e2e8f0;
             vertical-align: middle;
@@ -215,26 +215,6 @@
             : 0;
     @endphp
     <div class="summary-box">
-        <div class="summary-cell">
-            <div class="val">{{ $totalSantri }}</div>
-            <div class="lbl">Total Santri</div>
-        </div>
-        <div class="summary-cell">
-            <div class="val hadir">{{ $totalHadir }}</div>
-            <div class="lbl">Total Hadir</div>
-        </div>
-        <div class="summary-cell">
-            <div class="val izin">{{ $totalIzin }}</div>
-            <div class="lbl">Total Izin</div>
-        </div>
-        <div class="summary-cell">
-            <div class="val sakit">{{ $totalSakit }}</div>
-            <div class="lbl">Total Sakit</div>
-        </div>
-        <div class="summary-cell">
-            <div class="val alfa">{{ $totalAlfa }}</div>
-            <div class="lbl">Total Alfa</div>
-        </div>
         <div class="summary-cell">
             <div class="val {{ $avgPersen >= 80 ? 'persen-tinggi' : ($avgPersen >= 60 ? 'persen-sedang' : 'persen-rendah') }}">
                 {{ $avgPersen }}%
