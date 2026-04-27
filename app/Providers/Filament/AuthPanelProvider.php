@@ -20,6 +20,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Support\HtmlString;
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AuthPanelProvider extends PanelProvider
 {
@@ -37,6 +39,8 @@ class AuthPanelProvider extends PanelProvider
       ->plugins(
         [
           ChangePasswordPlugin::make(),
+          FilamentBackgroundsPlugin::make()
+            ->imageProvider(MyImages::make()->directory('assets')),
         ]
       )
       ->discoverResources(in: app_path('Filament/Auth/Resources'), for: 'App\\Filament\\Auth\\Resources')
