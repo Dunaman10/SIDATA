@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Rekap Presensi Santri</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
