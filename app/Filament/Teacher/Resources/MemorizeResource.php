@@ -7,7 +7,8 @@ use App\Forms\Components\AudioRecorder;
 use App\Models\Memorize;
 use App\Models\MentorStudent;
 use App\Models\Surah;
-use Filament\Forms\Components\FileUpload;
+use emmanpbarrameda\FilamentTakePictureField\Forms\Components\TakePicture;
+// use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -272,13 +273,15 @@ class MemorizeResource extends Resource
           'record' => (object)['audio' => $get('audio')],
         ]),
 
-      FileUpload::make('foto')
-        ->label('Upload Foto Santri')
-        ->image()
-        ->directory('foto-santri')
+      TakePicture::make('foto')
+        ->label('Ambil Foto')
         ->disk('public')
-        ->placeholder('Upload Foto Santri')
-        ->default(fn($record) => $record?->foto),
+        ->directory('foto-santri')
+        ->visibility('public')
+        ->showCameraSelector(true)
+        ->aspect("1:1")
+        ->imageQuality(88)
+        ->shouldDeleteOnEdit(false),
 
       // FileUpload::make('audio_upload')
       //   ->label('Upload Rekaman Suara Santri')

@@ -40,7 +40,7 @@ class AuthPanelProvider extends PanelProvider
         [
           ChangePasswordPlugin::make(),
           FilamentBackgroundsPlugin::make()
-            ->imageProvider(MyImages::make()->directory('assets')),
+            ->imageProvider(MyImages::make()->directory('assets/admin')),
         ]
       )
       ->discoverResources(in: app_path('Filament/Auth/Resources'), for: 'App\\Filament\\Auth\\Resources')

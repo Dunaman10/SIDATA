@@ -47,7 +47,7 @@
         {{-- Logo --}}
         <div class="flex items-center gap-3">
             <a href="{{ route('index') }}">
-                <img src="/assets/logo-darutafsir.png" alt="Darut Tafsir Logo" class="h-10 md:h-12 drop-shadow-md">
+                <img src="/assets/logo-darutafsir.jpg" alt="Darut Tafsir Logo" class="h-10 md:h-12 drop-shadow-md">
             </a>
             <h1 id="nav-title" class="text-xl md:text-2xl font-bold tracking-tight text-white transition-colors duration-300">Darut Tafsir</h1>
         </div>
