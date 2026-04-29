@@ -45,6 +45,8 @@ class AdminPanelProvider extends PanelProvider
         [
           ChangePasswordPlugin::make(),
           FilamentApexChartsPlugin::make(),
+          \Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin::make()
+            ->shouldRegisterNavigation(false)
         ]
       )
       ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

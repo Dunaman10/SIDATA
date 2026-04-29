@@ -22,6 +22,8 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Hardikkhorasiya09\ChangePassword\ChangePasswordPlugin;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -41,9 +43,18 @@ class TeacherPanelProvider extends PanelProvider
       ->colors([
         'primary' => Color::hex('#E5077C'),
       ])
+      ->userMenuItems([
+          'profile' => \Filament\Navigation\MenuItem::make()
+              ->label('Edit Profile')
+              ->url(fn (): string => EditProfilePage::getUrl())
+              ->icon('heroicon-m-user-circle'),
+      ])
       ->plugins([
-          ChangePasswordPlugin::make(),
-          FilamentApexChartsPlugin::make(),
+        ChangePasswordPlugin::make(),
+        FilamentApexChartsPlugin::make(),
+        FilamentEditProfilePlugin::make()
+          ->shouldRegisterNavigation(false)
+          ->shouldShowDeleteAccountForm(false)
       ])
       ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\\Filament\\Teacher\\Resources')
       ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\\Filament\\Teacher\\Pages')

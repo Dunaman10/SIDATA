@@ -21,6 +21,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class ParentPanelProvider extends PanelProvider
 {
@@ -35,9 +37,18 @@ class ParentPanelProvider extends PanelProvider
       ->colors([
         'primary' => Color::hex('#E5077C'),
       ])
+      ->userMenuItems([
+          'profile' => \Filament\Navigation\MenuItem::make()
+              ->label('Edit Profile')
+              ->url(fn (): string => EditProfilePage::getUrl())
+              ->icon('heroicon-m-user-circle'),
+      ])
       ->plugins(
         [
           ChangePasswordPlugin::make(),
+          FilamentEditProfilePlugin::make()
+            ->shouldRegisterNavigation(false)
+            ->shouldShowDeleteAccountForm(false) // Biasanya user biasa tidak boleh hapus akun sendiri
         ]
       )
       ->discoverResources(in: app_path('Filament/Parent/Resources'), for: 'App\\Filament\\Parent\\Resources')

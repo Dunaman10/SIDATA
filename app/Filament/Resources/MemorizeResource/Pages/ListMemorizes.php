@@ -51,9 +51,9 @@ class ListMemorizes extends ListRecords
           }
 
           // ============================================
-          // 1. Buat CSV data setoran (sebagai pengganti Excel, tanpa library tambahan)
+          // 1. Buat Struktur Folder & CSV yang User Friendly
           // ============================================
-          $csvContent = implode(';', [
+          $globalCsvHeader = implode(';', [
             'No',
             'Nama Santri',
             'Surat',
@@ -73,60 +73,107 @@ class ListMemorizes extends ListRecords
             'Tanggal Setoran',
           ]) . "\n";
 
-          $no = 1;
-          foreach ($records as $record) {
-            $csvContent .= implode(';', [
-              $no++,
-              $record->student?->student_name ?? '-',
-              $record->surah?->surah_name ?? '-',
-              $record->juz ?? '-',
-              $record->from ?? '-',
-              $record->to ?? '-',
-              $record->makharijul_huruf ?? '-',
-              $record->shifatul_huruf ?? '-',
-              $record->ahkamul_qiroat ?? '-',
-              $record->ahkamul_waqfi ?? '-',
-              $record->qowaid_tafsir ?? '-',
-              $record->tarjamatul_ayat ?? '-',
-              $record->nilai_avg ?? '-',
-              $record->approved_by ?? '-',
-              $record->complete ? 'Selesai' : 'Belum Selesai',
-              $record->teacher?->user?->name ?? '-',
-              $record->created_at?->format('d-m-Y H:i') ?? '-',
-            ]) . "\n";
+          $globalCsvContent = "";
+          $globalNo = 1;
+
+          // Kelompokkan data berdasarkan nama santri
+          $recordsByStudent = $records->groupBy(function ($record) {
+              // Bersihkan nama santri dari karakter yang tidak valid untuk nama folder
+              return trim(str_replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], '', $record->student?->student_name ?? 'Santri_Tanpa_Nama'));
+          });
+
+          foreach ($recordsByStudent as $studentName => $studentRecords) {
+              // Header Personal CSV untuk tiap santri
+              $personalCsvContent = implode(';', [
+                'No',
+                'Surat',
+                'Juz',
+                'Dari Ayat',
+                'Sampai Ayat',
+                'Makharijul Huruf',
+                'Shifatul Huruf',
+                'Ahkamul Qiroat',
+                'Ahkamul Waqfi',
+                'Qowaid Tafsir',
+                'Tarjamatul Ayat',
+                'Nilai Rata-Rata',
+                'Diperiksa Oleh',
+                'Status',
+                'Guru Penguji',
+                'Tanggal Setoran',
+              ]) . "\n";
+              
+              $personalNo = 1;
+
+              foreach ($studentRecords as $record) {
+                  $surahName = str_replace(['/', '\\', ' '], '_', $record->surah?->surah_name ?? 'unknown');
+                  $date = $record->created_at?->format('d-m-Y') ?? 'unknown';
+                  $time = $record->created_at?->format('His') ?? 'unknown';
+
+                  // Tambah ke Global CSV
+                  $globalCsvContent .= implode(';', [
+                    $globalNo++,
+                    $record->student?->student_name ?? '-',
+                    $record->surah?->surah_name ?? '-',
+                    $record->juz ?? '-',
+                    $record->from ?? '-',
+                    $record->to ?? '-',
+                    $record->makharijul_huruf ?? '-',
+                    $record->shifatul_huruf ?? '-',
+                    $record->ahkamul_qiroat ?? '-',
+                    $record->ahkamul_waqfi ?? '-',
+                    $record->qowaid_tafsir ?? '-',
+                    $record->tarjamatul_ayat ?? '-',
+                    $record->nilai_avg ?? '-',
+                    $record->approved_by ?? '-',
+                    $record->complete ? 'Selesai' : 'Belum Selesai',
+                    $record->teacher?->user?->name ?? '-',
+                    $record->created_at?->format('d-m-Y H:i') ?? '-',
+                  ]) . "\n";
+
+                  // Tambah ke Personal CSV
+                  $personalCsvContent .= implode(';', [
+                    $personalNo++,
+                    $record->surah?->surah_name ?? '-',
+                    $record->juz ?? '-',
+                    $record->from ?? '-',
+                    $record->to ?? '-',
+                    $record->makharijul_huruf ?? '-',
+                    $record->shifatul_huruf ?? '-',
+                    $record->ahkamul_qiroat ?? '-',
+                    $record->ahkamul_waqfi ?? '-',
+                    $record->qowaid_tafsir ?? '-',
+                    $record->tarjamatul_ayat ?? '-',
+                    $record->nilai_avg ?? '-',
+                    $record->approved_by ?? '-',
+                    $record->complete ? 'Selesai' : 'Belum Selesai',
+                    $record->teacher?->user?->name ?? '-',
+                    $record->created_at?->format('d-m-Y H:i') ?? '-',
+                  ]) . "\n";
+
+                  // Tambahkan file Audio ke dalam folder santri
+                  if ($record->audio && Storage::disk('public')->exists($record->audio)) {
+                    $audioPath = Storage::disk('public')->path($record->audio);
+                    $ext = pathinfo($record->audio, PATHINFO_EXTENSION);
+                    $zip->addFile($audioPath, "{$studentName}/Audio/Setoran_{$surahName}_{$date}_{$time}.{$ext}");
+                  }
+
+                  // Tambahkan file Foto ke dalam folder santri
+                  if ($record->foto && Storage::disk('public')->exists($record->foto)) {
+                    $fotoPath = Storage::disk('public')->path($record->foto);
+                    $ext = pathinfo($record->foto, PATHINFO_EXTENSION);
+                    $zip->addFile($fotoPath, "{$studentName}/Foto/Setoran_{$surahName}_{$date}_{$time}.{$ext}");
+                  }
+              }
+
+              // Simpan Personal CSV ke dalam folder santri (tambah BOM untuk UTF-8)
+              $personalCsvContent = "\xEF\xBB\xBF" . $personalCsvContent;
+              $zip->addFromString("{$studentName}/Rekap_Hafalan_{$studentName}.csv", $personalCsvContent);
           }
 
-          // Tambahkan BOM untuk UTF-8 agar Excel bisa membaca karakter Indonesia
-          $csvContent = "\xEF\xBB\xBF" . $csvContent;
-          $zip->addFromString('data_setoran_hafalan.csv', $csvContent);
-
-          // ============================================
-          // 2. Tambahkan file Audio ke dalam ZIP
-          // ============================================
-          foreach ($records as $record) {
-            if ($record->audio && Storage::disk('public')->exists($record->audio)) {
-              $audioPath = Storage::disk('public')->path($record->audio);
-              $studentName = str_replace(['/', '\\', ' '], '_', $record->student?->student_name ?? 'unknown');
-              $surahName = str_replace(['/', '\\', ' '], '_', $record->surah?->surah_name ?? 'unknown');
-              $date = $record->created_at?->format('Y-m-d') ?? 'unknown';
-              $ext = pathinfo($record->audio, PATHINFO_EXTENSION);
-              $zip->addFile($audioPath, "audio/{$studentName}_{$surahName}_{$date}.{$ext}");
-            }
-          }
-
-          // ============================================
-          // 3. Tambahkan file Foto ke dalam ZIP
-          // ============================================
-          foreach ($records as $record) {
-            if ($record->foto && Storage::disk('public')->exists($record->foto)) {
-              $fotoPath = Storage::disk('public')->path($record->foto);
-              $studentName = str_replace(['/', '\\', ' '], '_', $record->student?->student_name ?? 'unknown');
-              $surahName = str_replace(['/', '\\', ' '], '_', $record->surah?->surah_name ?? 'unknown');
-              $date = $record->created_at?->format('Y-m-d') ?? 'unknown';
-              $ext = pathinfo($record->foto, PATHINFO_EXTENSION);
-              $zip->addFile($fotoPath, "foto/{$studentName}_{$surahName}_{$date}.{$ext}");
-            }
-          }
+          // Simpan Global CSV di luar folder (root) dengan BOM
+          $globalCsvContent = "\xEF\xBB\xBF" . $globalCsvHeader . $globalCsvContent;
+          $zip->addFromString('Rekap_Global_Seluruh_Santri.csv', $globalCsvContent);
 
           $zip->close();
 

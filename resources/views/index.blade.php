@@ -20,7 +20,7 @@
   {{-- Google Fonts --}}
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="icon" href="/assets/logo-darutafsir.png">
+  <link rel="icon" href="{{ asset('img/logo-darutafsir.png') }}">
 
   <style>
       body {
@@ -276,7 +276,7 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 mb-12">
         <div class="md:w-1/3">
             <div class="flex items-center gap-2 mb-6">
-                <img src="/assets/logo-darutafsir.png" alt="Logo" class="h-10">
+                <img src="{{ asset('img/logo-darutafsir.png') }}" alt="Logo" class="h-10">
                 <span class="text-xl font-bold">Darut Tafsir</span>
             </div>
             <p class="text-slate-400 leading-relaxed text-sm">
