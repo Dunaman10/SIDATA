@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Rekap Presensi Kelas</title>
     <style>
         * { box-sizing: border-box; }
 
