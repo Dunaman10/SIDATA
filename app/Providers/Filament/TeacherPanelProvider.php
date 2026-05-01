@@ -7,13 +7,9 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\View\PanelsRenderHook;
 use App\Http\Middleware\OnlyTeacher;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Teacher\Pages\ClassDetail;
-use App\Models\Classes;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -21,7 +17,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Hardikkhorasiya09\ChangePassword\ChangePasswordPlugin;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
@@ -44,23 +39,31 @@ class TeacherPanelProvider extends PanelProvider
         'primary' => Color::hex('#E5077C'),
       ])
       ->userMenuItems([
-          'profile' => \Filament\Navigation\MenuItem::make()
-              ->label('Edit Profile')
-              ->url(fn (): string => EditProfilePage::getUrl())
-              ->icon('heroicon-m-user-circle'),
+        'profile' => \Filament\Navigation\MenuItem::make()
+          ->label('Edit Profile')
+          ->url(fn(): string => EditProfilePage::getUrl())
+          ->icon('heroicon-m-user-circle'),
       ])
       ->plugins([
-        ChangePasswordPlugin::make(),
         FilamentApexChartsPlugin::make(),
         FilamentEditProfilePlugin::make()
           ->shouldRegisterNavigation(false)
+          ->shouldShowEditProfileForm(false)
           ->shouldShowDeleteAccountForm(false)
+          ->shouldShowAvatarForm(
+              value: true,
+              directory: 'avatars',
+              rules: 'mimes:jpeg,png,jpg|max:1024'
+          )
+          ->customProfileComponents([
+              \App\Livewire\EditProfileForm::class,
+          ])
       ])
       ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\\Filament\\Teacher\\Resources')
       ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\\Filament\\Teacher\\Pages')
       ->pages([
         Pages\Dashboard::class,
-        ClassDetail::class, // Pastikan ini sesuai dengan namespace dan nama kelas
+        ClassDetail::class,
       ])
       ->discoverWidgets(in: app_path('Filament/Teacher/Widgets'), for: 'App\\Filament\\Teacher\\Widgets')
       ->widgets([

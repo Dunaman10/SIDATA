@@ -13,8 +13,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use Hardikkhorasiya09\ChangePassword\ChangePasswordPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -38,17 +36,25 @@ class ParentPanelProvider extends PanelProvider
         'primary' => Color::hex('#E5077C'),
       ])
       ->userMenuItems([
-          'profile' => \Filament\Navigation\MenuItem::make()
-              ->label('Edit Profile')
-              ->url(fn (): string => EditProfilePage::getUrl())
-              ->icon('heroicon-m-user-circle'),
+        'profile' => \Filament\Navigation\MenuItem::make()
+          ->label('Edit Profile')
+          ->url(fn(): string => EditProfilePage::getUrl())
+          ->icon('heroicon-m-user-circle'),
       ])
       ->plugins(
         [
-          ChangePasswordPlugin::make(),
           FilamentEditProfilePlugin::make()
             ->shouldRegisterNavigation(false)
-            ->shouldShowDeleteAccountForm(false) // Biasanya user biasa tidak boleh hapus akun sendiri
+            ->shouldShowEditProfileForm(false)
+            ->shouldShowDeleteAccountForm(false)
+            ->shouldShowAvatarForm(
+                value: true,
+                directory: 'avatars',
+                rules: 'mimes:jpeg,png,jpg|max:1024'
+            )
+            ->customProfileComponents([
+                \App\Livewire\EditProfileForm::class,
+            ]),
         ]
       )
       ->discoverResources(in: app_path('Filament/Parent/Resources'), for: 'App\\Filament\\Parent\\Resources')
