@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Illuminate\Support\HtmlString;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
@@ -28,13 +29,17 @@ class AdminPanelProvider extends PanelProvider
     return $panel
       // ->darkMode(false)
       ->default()
-      ->brandName('Darutafsir')
-      // ->brandLogo(asset('img/logo-darutafsir.png'))
-      // ->brandLogoHeight('40px')
+      ->brandLogo(new HtmlString('
+          <div class="flex items-center gap-2">
+              <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" class="h-9 w-auto">
+              <span class="text-xl font-bold tracking-tight text-white">Daruttafsir</span>
+          </div>
+      '))
+      ->login()
+      ->brandName('Daruttafsir')
       ->favicon(asset('img/logo-darutafsir.png'))
       ->id('admin')
       ->path('admin')
-      ->login()
       ->databaseNotifications()
       ->spa()
       ->colors([
@@ -88,6 +93,7 @@ class AdminPanelProvider extends PanelProvider
         SubstituteBindings::class,
         DisableBladeIconComponents::class,
         DispatchServingFilamentEvent::class,
+        \App\Http\Middleware\RedirectIfNotAuthenticated::class,
         OnlyAdmin::class,
 
       ])

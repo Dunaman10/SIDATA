@@ -30,6 +30,11 @@ class AuthPanelProvider extends PanelProvider
     return $panel
       ->id('auth')
       ->path('auth')
+      ->brandLogo(new HtmlString('
+          <div class="flex items-center justify-center gap-4 mb-10">
+              <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" style="height: 56px;" class="w-auto mb-5">
+          </div>
+      '))
       ->brandName('Daruttafsir')
       ->favicon(asset('img/logo-darutafsir.png'))
       ->login(\App\Filament\Pages\Auth\Login::class)
