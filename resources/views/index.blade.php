@@ -85,17 +85,17 @@
   {{-- Hero Section --}}
   <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('{{ $profile && $profile->banner_image ? asset('storage/' . $profile->banner_image) : asset('assets/banner.jpg') }}');">
      {{-- Overlay --}}
-     <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-50"></div>
+     <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);"></div>
 
      <div class="relative z-10 h-full flex items-center justify-center text-center px-4">
         <div class="max-w-4xl mx-auto mt-16">
             <span class="inline-block py-1 px-3 rounded-full bg-pink-600/20 text-pink-300 border border-pink-500/30 text-sm font-medium mb-6 backdrop-blur-sm" data-aos="fade-down" data-aos-delay="100">
                 Pondok Pesantren Modern & Tahfidz
             </span>
-            <h2 class="font-bold text-4xl md:text-6xl lg:text-7xl mb-6 text-white leading-tight" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="font-bold text-4xl md:text-6xl lg:text-7xl mb-6 text-white leading-tight drop-shadow-lg" data-aos="fade-up" data-aos-delay="200">
                 {{ $profile->title ?? 'Membangun Generasi Qur\'ani & Berakhlak' }}
             </h2>
-            <p class="text-gray-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+            <p class="text-gray-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md" data-aos="fade-up" data-aos-delay="300">
                 {{ $profile->subtitle ?? 'Lingkungan pendidikan yang menyatukan ilmu agama dan wawasan modern, membekali santri untuk masa depan yang gemilang.' }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
