@@ -53,7 +53,6 @@ class DataKelasResource extends Resource
 
         TextColumn::make('student_name')
           ->label('Nama Santri')
-          ->searchable()
           ->sortable(),
 
         TextColumn::make('tanggal_lahir')
@@ -61,12 +60,11 @@ class DataKelasResource extends Resource
           ->formatStateUsing(fn($state) => Carbon::parse($state)->translatedFormat('d F Y')),
 
         TextColumn::make('latestMemorize.surah.surah_name')
-          ->label('Progress Terakhir')
-          ->searchable(),
+          ->label('Progress Terakhir'),
 
         TextColumn::make('class.class_name')
           ->label('Kelas')
-          ->searchable()
+
 
       ])
       ->filters([

@@ -99,31 +99,108 @@ Bagian III: Panduan Penggunaan Hasil Proyek
 9. `php artisan serve` untuk menjalankan web (mengakses di http://127.0.0.1:8000).
 
 9. Panduan Pengoperasian Dasar 
-• Akses Awal: 
-Buka browser lalu masuk ke halaman login di rute: `/auth/login`. Setelah input email/password, pengguna akan diarahkan ke panel spesifik:
-- `/admin` (Dasbor Administrator)
-- `/teacher` (Dasbor Guru)
-- `/parent` (Dasbor Orang Tua)
-- `/keamanan` (Dasbor Security).
-• Antarmuka Pengguna (UI) Overview: 
-Dashboard memiliki bilah menu navigasi di sisi kiri, area statistik widget (Chart) dan ringkasan data di tengah layar, dan menu bar header berisi tombol profile, Notifikasi, dan Log Out.
-• Skenario Penggunaan Utama: 
-o Prosedur 1: Proses Input Penilaian Hafalan (Guru)
-  1. Login menggunakan akun Role Guru.
-  2. Buka menu samping, pilih menu `Tahfidz` lalu klik `Setoran Hafalan`.
-  3. Klik `Create` (Tambah Data).
-  4. Pilih Santri, masukkan detail surah/ayat, masukkan kriteria penilaian tajwid, lalu simpan (Create).
-o Prosedur 2: Memantau Progres Hafalan Anak (Orang Tua)
-  1. Login dengan akun Role Orang Tua.
-  2. Buka menu `Riwayat Setoran` atau `Nilai Santri`.
-  3. Panel akan otomatis hanya menampilkan rekam jejak progres hafalan yang merujuk pada identitas anak/santri yang terkait.
+Bagian III: Panduan Penggunaan Hasil Proyek (Buku Panduan)
 
-10. Fitur Lanjutan dan Administrasi 
-• Pengaturan Kustomisasi: Administrator berhak mengolah halaman muka pesantren (Landing Page module) lewat menu admin.
-• Manajemen Pengguna: Administrator dapat membekukan, menambah, atau merotasi otorisasi User melaui tab Role Management dan Users Management.
-• Pemeliharaan Dasar: Selalu perhatikan perintah `php artisan optimize:clear` untuk membersihkan penumpukan cache pada server. Sangat disarankan untuk malakukan duplikasi database/backup terjadwal secara berkala untuk menghindari corrupt data.
+Bab ini merupakan panduan praktis (manual book) yang merinci langkah-langkah penggunaan aplikasi SIDATA (Sistem Informasi Darut Tafsir) berdasarkan setiap Role (Peran) yang tersedia, yaitu: Administrator, Guru, Orang Tua, dan Keamanan.
 
-Bagian IV: Pemecahan Masalah dan Penutup 
+---------------------------------------------------------
+A. PANDUAN UNTUK ADMINISTRATOR
+Role Administrator memiliki akses penuh terhadap manajemen data master, pengguna, dan pengaturan sistem secara keseluruhan.
+---------------------------------------------------------
+1. Akses Awal dan Login
+   a. Buka browser dan akses URL sistem (misal: daruttafsir.test/admin).
+   b. Masukkan Email dan Password yang telah didaftarkan.
+   c. Klik tombol "Sign In".
+   [TANGKAPAN_LAYAR: Halaman Login Admin]
+
+2. Manajemen Pengguna dan Role
+   a. Pilih menu "Users" atau "Roles" pada sidebar kiri.
+   b. Klik tombol "Create" di pojok kanan atas untuk menambah user baru.
+   c. Isi formulir pendaftaran (Nama, Email, Role, dsb.) dan klik "Create".
+   d. Untuk membekukan/menghapus, klik ikon tempat sampah (Delete) di tabel data.
+   [TANGKAPAN_LAYAR: Tabel Users Management & Form Create User]
+
+3. Manajemen Data Master (Santri, Guru, Kelas)
+   a. Di menu sidebar, terdapat grup "Master Data" yang berisi Santri, Teacher, Classes, dan Academic Year.
+   b. Klik menu "Students" untuk mengelola data santri. Klik "Create" untuk memasukkan data santri baru, lengkap dengan informasi Orang Tua (Wali).
+   c. Lakukan hal yang sama untuk mengelola data Guru dan Kelas.
+   [TANGKAPAN_LAYAR: Halaman List Student & Form Create Student]
+
+4. Penempatan Pembimbing dan Wali Kelas
+   a. Buka menu "Mentor Students" untuk mengalokasikan Santri kepada Guru Pembimbing (Musyrif) hafalan.
+   b. Buka menu "Class Teachers" untuk menugaskan Guru sebagai wali kelas tertentu.
+   [TANGKAPAN_LAYAR: Form Penempatan Pembimbing]
+
+5. Pengaturan Halaman Muka (Landing Page)
+   a. Akses menu "Profiles" atau "Facilities" untuk mengubah informasi yang akan ditampilkan pada website profil pesantren.
+   [TANGKAPAN_LAYAR: Manajemen Landing Page]
+
+
+---------------------------------------------------------
+B. PANDUAN UNTUK GURU / MUSYRIF
+Role Guru bertugas memantau progres kelas dan melakukan input penilaian hafalan santri.
+---------------------------------------------------------
+1. Dashboard dan Akses Profil
+   a. Login melalui panel guru (URL: domain.com/teacher).
+   b. Di pojok kanan atas, klik nama Anda -> "Edit Profile" untuk memperbarui foto profil, nama, email, atau nomor telepon (Gunakan format 08xxx).
+   [TANGKAPAN_LAYAR: Halaman Dashboard Guru dan Menu Edit Profile]
+
+2. Input Setoran Hafalan Santri (Prosedur Utama)
+   a. Pada sidebar, pilih menu "Memorize" (Setoran Hafalan).
+   b. Klik "Create" untuk memasukkan data setoran baru.
+   c. Pilih Santri yang dibimbing, pilih Surah dan Ayat, lalu nilai kriteria (Tajwid, Kelancaran, dsb).
+   d. Sistem akan otomatis menghitung nilai akhir. Klik "Create" untuk menyimpan.
+   [TANGKAPAN_LAYAR: Form Input Setoran Hafalan]
+
+3. Jurnal Mengajar dan Absensi
+   a. Pilih menu "Teaching Journals" untuk mencatat aktivitas kegiatan belajar mengajar harian.
+   b. Pilih menu "Rekap Presensi" untuk mencatat atau melihat rekam kehadiran santri di kelas.
+   [TANGKAPAN_LAYAR: Halaman Teaching Journal]
+
+4. Melihat Rekap Nilai dan Kelas
+   a. Akses menu "Data Kelas" untuk melihat rincian santri yang tergabung dalam kelas yang diampu.
+   b. Akses "Rekap Nilai" untuk memantau nilai keseluruhan hafalan santri.
+   [TANGKAPAN_LAYAR: Halaman Data Kelas & Rekap Nilai]
+
+
+---------------------------------------------------------
+C. PANDUAN UNTUK ORANG TUA / WALI SANTRI
+Role Orang Tua diberikan akses transparansi untuk memonitor progres hafalan dan mengajukan perizinan anak.
+---------------------------------------------------------
+1. Pantauan Progres Hafalan
+   a. Login melalui panel orang tua (URL: domain.com/parent).
+   b. Di halaman Dashboard, akan langsung terlihat grafik (Chart) perkembangan hafalan anak.
+   c. Untuk detail lebih lanjut, klik menu "Progress Hafalan" atau "Memorize". Anda hanya akan melihat data anak Anda sendiri.
+   [TANGKAPAN_LAYAR: Dashboard Parent dengan Grafik & Tabel Progress Hafalan]
+
+2. Unduh Sertifikat & Arsip
+   a. Akses menu "Certificates" untuk melihat dan mengunduh e-Sertifikat pencapaian hafalan yang diterbitkan pesantren.
+   b. Akses menu "Archives" untuk mengunduh riwayat rekaman/file hafalan (dalam format ZIP yang sudah terstruktur rapi).
+   [TANGKAPAN_LAYAR: Halaman Certificates & Tombol Unduh]
+
+3. Pengajuan Perizinan / Kepulangan
+   a. Pilih menu "Permissions" (Perizinan).
+   b. Klik "Create", lalu isi alasan perizinan (sakit/pulang), tanggal, dan keterangan.
+   c. Status pengajuan akan terlihat (Pending, Disetujui, atau Ditolak).
+   [TANGKAPAN_LAYAR: Form Pengajuan Perizinan Orang Tua]
+
+
+---------------------------------------------------------
+D. PANDUAN UNTUK KEAMANAN (SECURITY)
+Role Keamanan bertugas memverifikasi izin keluar/masuk santri berdasarkan pengajuan orang tua.
+---------------------------------------------------------
+1. Verifikasi Kepulangan / Perizinan
+   a. Login melalui panel keamanan (URL: domain.com/keamanan).
+   b. Pilih menu "Keamanan" atau "Perizinan" pada sidebar.
+   c. Terdapat daftar santri yang diajukan izinnya oleh orang tua.
+   d. Petugas keamanan dapat memvalidasi apakah santri sudah dijemput dan menyetujui (Approve) proses check-out/check-in tersebut dari gerbang pesantren.
+   [TANGKAPAN_LAYAR: Tabel Verifikasi Perizinan Role Keamanan]
+
+---------------------------------------------------------
+E. PEMELIHARAAN SISTEM DASAR (KHUSUS ADMIN/DEVELOPER)
+---------------------------------------------------------
+• Membersihkan Cache: Jalankan `php artisan optimize:clear` di terminal server jika ada perubahan sistem yang tidak muncul.
+• Memperbaiki Gambar/File Tidak Tampil: Jalankan `php artisan storage:link` jika foto profil atau file unduhan mengalami error 404.
 
 11. Pemecahan Masalah (Troubleshooting) 
 • Masalah Umum dan Solusi: 

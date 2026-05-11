@@ -44,12 +44,10 @@ class RekapNilaiResource extends Resource
       )
       ->columns([
         TextColumn::make('student_name')
-          ->label('Nama Santri')
-          ->searchable(),
+          ->label('Nama Santri'),
 
         TextColumn::make('class.class_name')
-          ->label('Kelas')
-          ->searchable(),
+          ->label('Kelas'),
 
         TextColumn::make('pembimbing.user.name')
           ->label('Guru Pembimbing'),

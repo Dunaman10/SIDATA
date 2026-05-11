@@ -52,13 +52,14 @@ class AdminPanelProvider extends PanelProvider
           FilamentEditProfilePlugin::make()
             ->shouldRegisterNavigation(false)
             ->shouldShowEditProfileForm(false)
+            ->shouldShowDeleteAccountForm(false)
             ->shouldShowAvatarForm(
-                value: true,
-                directory: 'avatars',
-                rules: 'mimes:jpeg,png,jpg|max:1024'
+              value: true,
+              directory: 'avatars',
+              rules: 'mimes:jpeg,png,jpg|max:1024'
             )
             ->customProfileComponents([
-                \App\Livewire\EditProfileForm::class,
+              \App\Livewire\EditProfileForm::class,
             ])
         ]
       )
