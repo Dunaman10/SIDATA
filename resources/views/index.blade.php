@@ -83,7 +83,7 @@
   </nav>
 
   {{-- Hero Section --}}
-  <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('{{ $profile && $profile->banner_image ? asset('storage/' . $profile->banner_image) : asset('assets/banner.jpg') }}');">
+  <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('{{ $profile && $profile->banner_image ? asset('storage/' . $profile->banner_image) : asset('assets/admin/banner.jpg') }}');">
      {{-- Overlay --}}
      <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);"></div>
 
