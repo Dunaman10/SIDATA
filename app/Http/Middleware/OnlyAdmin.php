@@ -15,7 +15,7 @@ class OnlyAdmin
    */
   public function handle(Request $request, Closure $next): Response
   {
-    if (auth()->user() && auth()->user()->role_id !== 1) {
+    if (auth()->user() && (int) auth()->user()->role_id !== 1) {
       abort(403, 'Unauthorized');
     }
     return $next($request);
