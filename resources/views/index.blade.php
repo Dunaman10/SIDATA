@@ -9,7 +9,6 @@
 
   {{-- Tailwind CSS --}}
   @vite('resources/css/app.css')
-  <script src="https://cdn.tailwindcss.com"></script>
 
   {{-- FontAwesome --}}
   <script src="https://kit.fontawesome.com/b9470f7400.js" crossorigin="anonymous"></script>
