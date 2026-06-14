@@ -22,6 +22,7 @@ use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Support\HtmlString;
 
 class TeacherPanelProvider extends PanelProvider
 {
@@ -29,7 +30,13 @@ class TeacherPanelProvider extends PanelProvider
   {
     return $panel
       // ->darkMode(false)
-      ->brandName('Darutafsir')
+      ->brandLogo(new HtmlString('
+          <div class="flex items-center gap-2">
+              <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" class="h-9 w-auto">
+              <span class="text-xl font-bold tracking-tight text-gray-950 dark:text-white">Daruttafsir</span>
+          </div>
+      '))
+      ->brandName('Daruttafsir')
       ->favicon(asset('img/logo-darutafsir.png'))
       ->id('teacher')
       ->path('teacher')

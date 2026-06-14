@@ -71,6 +71,27 @@ class AuthPanelProvider extends PanelProvider
         RedirectByRole::class
       ])
       ->renderHook(
+        'panels::head.end',
+        fn() => new HtmlString('
+          <style>
+            .fi-simple-main.fi-simple-main.fi-simple-main {
+              background-color: rgba(255, 255, 255, 0.45) !important;
+              border: 1px solid rgba(255, 255, 255, 0.25) !important;
+              box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08) !important;
+            }
+            .dark .fi-simple-main.fi-simple-main.fi-simple-main {
+              background-color: rgba(24, 24, 27, 0.55) !important;
+              border: 1px solid rgba(255, 255, 255, 0.1) !important;
+              box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+            }
+            .fi-simple-main.fi-simple-main.fi-simple-main:before {
+              backdrop-filter: blur(20px) !important;
+              -webkit-backdrop-filter: blur(20px) !important;
+            }
+          </style>
+        ')
+      )
+      ->renderHook(
         'panels::auth.login.form.after',
         fn() => new HtmlString('
           <div class="flex flex-col items-center w-full mt-4 gap-3">

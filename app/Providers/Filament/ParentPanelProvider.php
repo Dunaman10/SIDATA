@@ -21,13 +21,20 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Illuminate\Support\HtmlString;
 
 class ParentPanelProvider extends PanelProvider
 {
   public function panel(Panel $panel): Panel
   {
     return $panel
-      ->brandName('Darutafsir')
+      ->brandLogo(new HtmlString('
+          <div class="flex items-center gap-2">
+              <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" class="h-9 w-auto">
+              <span class="text-xl font-bold tracking-tight text-gray-950 dark:text-white">Daruttafsir</span>
+          </div>
+      '))
+      ->brandName('Daruttafsir')
       ->favicon(asset('img/logo-darutafsir.png'))
       ->id('parent')
       ->path('parent')

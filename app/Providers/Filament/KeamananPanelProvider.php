@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Illuminate\Support\HtmlString;
 
 class KeamananPanelProvider extends PanelProvider
 {
@@ -28,8 +29,14 @@ class KeamananPanelProvider extends PanelProvider
     return $panel
       ->id('keamanan')
       ->path('keamanan')
+      ->brandLogo(new HtmlString('
+          <div class="flex items-center gap-2">
+              <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" class="h-9 w-auto">
+              <span class="text-xl font-bold tracking-tight text-gray-950 dark:text-white">Daruttafsir</span>
+          </div>
+      '))
+      ->brandName('Daruttafsir')
       ->favicon(asset('img/logo-darutafsir.png'))
-      ->brandName('Darutafsir')
       ->login()
       ->databaseNotifications()
       ->colors([

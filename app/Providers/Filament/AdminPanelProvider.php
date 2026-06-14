@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
       ->brandLogo(new HtmlString('
           <div class="flex items-center gap-2">
               <img src="' . asset('img/logo-darutafsir.png') . '" alt="Logo" class="h-9 w-auto">
-              <span class="text-xl font-bold tracking-tight text-white">Daruttafsir</span>
+              <span class="text-xl font-bold tracking-tight text-gray-950 dark:text-white">Daruttafsir</span>
           </div>
       '))
       ->login()
