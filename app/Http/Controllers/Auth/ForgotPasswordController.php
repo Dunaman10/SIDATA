@@ -68,13 +68,18 @@ class ForgotPasswordController extends Controller
         ]);
 
         // Send OTP via WhatsApp
+        // Dynamic message: sertakan timestamp agar teks tidak 100% identik setiap kirim
+        $waktu   = now()->setTimezone('Asia/Jakarta')->format('H:i');
+        $suffix  = \App\Services\FonnteService::randomSuffix();
         $message = "🔐 *Kode OTP Daruttafsir*\n\n"
             . "Kode verifikasi Anda: *{$otpCode}*\n\n"
-            . "Kode ini berlaku selama 5 menit.\n"
+            . "Kode ini berlaku selama 5 menit (dikirim pukul {$waktu} WIB).\n"
             . "Jangan bagikan kode ini kepada siapa pun.\n\n"
-            . "_Jika Anda tidak merasa meminta kode ini, abaikan pesan ini._";
+            . "_Jika Anda tidak merasa meminta kode ini, abaikan pesan ini._"
+            . $suffix;
 
-        $sent = $fonnte->send($fonntePhone, $message);
+        // delay=false → OTP harus sampai cepat, tidak perlu random delay
+        $sent = $fonnte->send($fonntePhone, $message, delay: false);
 
         if (!$sent) {
             return back()->withErrors([
@@ -197,13 +202,18 @@ class ForgotPasswordController extends Controller
             'created_at' => now(),
         ]);
 
+        // Dynamic message: sertakan timestamp + suffix acak
+        $waktu   = now()->setTimezone('Asia/Jakarta')->format('H:i');
+        $suffix  = \App\Services\FonnteService::randomSuffix();
         $message = "🔐 *Kode OTP Daruttafsir*\n\n"
             . "Kode verifikasi Anda: *{$otpCode}*\n\n"
-            . "Kode ini berlaku selama 5 menit.\n"
+            . "Kode ini berlaku selama 5 menit (dikirim pukul {$waktu} WIB).\n"
             . "Jangan bagikan kode ini kepada siapa pun.\n\n"
-            . "_Jika Anda tidak merasa meminta kode ini, abaikan pesan ini._";
+            . "_Jika Anda tidak merasa meminta kode ini, abaikan pesan ini._"
+            . $suffix;
 
-        $fonnte->send($phone, $message);
+        // delay=false → resend OTP juga harus cepat
+        $fonnte->send($phone, $message, delay: false);
         RateLimiter::hit($key, 900);
         session(['otp_sent_at' => now()->timestamp]);
 
