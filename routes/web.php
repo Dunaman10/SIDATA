@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
   $profile = \App\Models\Profile::first();
-  return view('index', compact('profile'));
+  $facilities = \App\Models\Facility::all();
+  return view('index', compact('profile', 'facilities'));
 })->name('index');
 
 // Forgot Password via WhatsApp OTP

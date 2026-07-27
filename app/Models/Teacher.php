@@ -11,7 +11,7 @@ class Teacher extends Model
   use HasFactory;
 
   public $timestamps = false;
-  protected $fillable = ['id_users'];
+  protected $fillable = ['id_users', 'student_quota'];
 
   public function user()
   {

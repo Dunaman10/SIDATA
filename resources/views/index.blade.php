@@ -168,59 +168,15 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {{-- Facility Item 1 --}}
-            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+            @foreach($facilities as $index => $facility)
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="{{ 100 + ($index * 50) }}">
                 <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-mosque text-xl"></i>
+                    <i class="{{ $facility->icon }} text-xl"></i>
                 </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Masjid Jami'</h4>
-                <p class="text-slate-500 text-sm">Masjid luas dan nyaman sebagai pusat kegiatan ibadah dan kajian santri.</p>
+                <h4 class="text-xl font-bold text-slate-800 mb-2">{{ $facility->title }}</h4>
+                <p class="text-slate-500 text-sm">{{ $facility->description }}</p>
             </div>
-
-            {{-- Facility Item 2 --}}
-            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="150">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-house text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Asrama Berbasis Rumah</h4>
-                <p class="text-slate-500 text-sm">Mengusung konsep Pesantren ramah anak dengan pola pengasuhan Usrah (kekeluargaan).</p>
-            </div>
-
-             {{-- Facility Item 3 --}}
-             <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-chalkboard-user text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Private Class</h4>
-                <p class="text-slate-500 text-sm">Proses pembelajaran dirancang lebih efektif untuk menumbuhkan potensi, minat, dan bakat santri secara optimal.</p>
-            </div>
-
-             {{-- Facility Item 4 --}}
-             <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="250">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-book-quran text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Qur'an Generation</h4>
-                <p class="text-slate-500 text-sm">Qur’an Generation didukung fasilitas nyaman dan ramah anak untuk menciptakan lingkungan ideal dalam menghafal dan memahami Al-Qur’an.</p>
-            </div>
-
-             {{-- Facility Item 5 --}}
-             <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-user-shield text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Character Building</h4>
-                <p class="text-slate-500 text-sm">Membentuk santri berakhlak Qurani, Mandiri, dan bertanggung jawab.</p>
-            </div>
-
-             {{-- Facility Item 6 --}}
-             <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="350">
-                <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-pink-600">
-                    <i class="fa-solid fa-futbol text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2">Lapangan Olahraga</h4>
-                <p class="text-slate-500 text-sm">Area olahraga futsal, basket, dan badminton untuk kebugaran fisik.</p>
-            </div>
+            @endforeach
         </div>
       </div>
   </section>

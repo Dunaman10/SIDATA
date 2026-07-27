@@ -192,7 +192,10 @@ class TeachingJournalResource extends Resource
         Section::make('Detail Pembelajaran')
           ->schema([
             Textarea::make('topic')
-              ->label('Topik Pembelajaran'),
+              ->label('Topik Pembelajaran')
+              ->helperText(fn(Get $get): ?string => $get('is_substitute') 
+                ? 'Jika Anda guru pengganti, harap sertakan nama Anda.' 
+                : null),
           ]),
       ]);
   }

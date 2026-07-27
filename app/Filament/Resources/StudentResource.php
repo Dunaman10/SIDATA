@@ -101,7 +101,7 @@ class StudentResource extends Resource
         ImageColumn::make('profile')
           ->label('Foto Profil')
           ->disk('public') // Sesuaikan dengan disk tempat file disimpan
-          ->defaultImageUrl(asset('assets/default_pp.jpg'))
+          ->defaultImageUrl(asset('assets/default_pp.png'))
           ->circular(),
 
         TextColumn::make('nisn')

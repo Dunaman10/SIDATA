@@ -46,6 +46,13 @@ class TeacherResource extends Resource
         // Select::make('id_users')
         //   ->label('Nama Guru')
         //   ->relationship('user', 'name'),
+        \Filament\Forms\Components\TextInput::make('student_quota')
+          ->label('Batas Santri Binaan')
+          ->numeric()
+          ->default(3)
+          ->required()
+          ->minValue(1)
+          ->hint('Jumlah maksimal santri yang dapat dibimbing oleh ustadz ini'),
       ]);
   }
 
@@ -62,6 +69,11 @@ class TeacherResource extends Resource
           ->label('Santri Bimbingan')
           ->limit(20)
           ->placeholder('Kosong'),
+        TextColumn::make('student_quota')
+          ->label('Kuota')
+          ->sortable()
+          ->badge()
+          ->color('success'),
         TextColumn::make('user.email')
           ->label('Email Ustadz/Ustadzah')
           ->searchable()
@@ -70,7 +82,7 @@ class TeacherResource extends Resource
         //
       ])
       ->actions([
-        // Tables\Actions\EditAction::make(),
+        Tables\Actions\EditAction::make(),
         Tables\Actions\ViewAction::make(),
         Tables\Actions\DeleteAction::make(),
       ])

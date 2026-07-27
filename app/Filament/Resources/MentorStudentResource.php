@@ -53,7 +53,7 @@ class MentorStudentResource extends Resource
             $query
               ->whereHas('user', fn($q) => $q->where('role_id', 2))
               ->withCount('binaan')
-              ->having('binaan_count', '<', 3)
+              ->havingRaw('binaan_count < teachers.student_quota')
           )
           ->getOptionLabelFromRecordUsing(fn($record) => $record->user->name)
           ->preload()

@@ -49,7 +49,8 @@ class DataKelasResource extends Resource
           ->label('Foto Santri')
           ->circular()
           ->size(50)
-          ->disk('public'),
+          ->disk('public')
+          ->defaultImageUrl(asset('assets/default_pp.png')),
 
         TextColumn::make('student_name')
           ->label('Nama Santri')

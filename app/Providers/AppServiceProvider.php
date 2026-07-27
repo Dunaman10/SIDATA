@@ -7,6 +7,7 @@ use App\Livewire\EditProfileForm;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Http\Responses\Auth\LogoutResponse;
 use Filament\Tables\Columns\Layout\Panel;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -25,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
+    if (request()->header('x-forwarded-proto') === 'https' || str_contains(request()->getHost(), 'herd.network') || config('app.env') === 'production') {
+        URL::forceScheme('https');
+    }
+    
     Livewire::component('edit_profile_form', EditProfileForm::class);
   }
 }

@@ -12,6 +12,11 @@ class CreateTeachingJournal extends CreateRecord
 {
   protected static string $resource = TeachingJournalResource::class;
 
+  protected function getRedirectUrl(): string
+  {
+    return $this->getResource()::getUrl('index');
+  }
+
   /**
    * Mutate form data sebelum disimpan ke teaching_journals.
    * Auto-set teacher_id dan schedule_id dari guru yang sedang login.
