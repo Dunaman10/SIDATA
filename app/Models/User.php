@@ -67,6 +67,7 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         if (!$user->teacher()->exists()) {
           Teacher::create([
             'id_users' => $user->id,
+            'student_quota' => 3,
           ]);
         }
       } else {
