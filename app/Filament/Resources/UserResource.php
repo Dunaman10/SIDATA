@@ -66,7 +66,7 @@ class UserResource extends Resource
         TextInput::make('password')
           ->password()
           ->revealable()
-          ->helperText('Kosongkan jika tidak ingin mengubah password')
+          ->helperText(fn (string $operation): ?string => $operation === 'edit' ? 'Kosongkan jika tidak ingin mengubah password' : null)
           ->required(fn (string $operation): bool => $operation === 'create')
           ->dehydrated(fn (?string $state): bool => filled($state)),
 
