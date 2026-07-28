@@ -15,6 +15,10 @@
             interval: null,
 
             start() {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert('Browser atau perangkat Anda tidak mendukung fitur rekam suara langsung. Pastikan Anda menggunakan HTTPS dan browser versi terbaru.');
+                    return;
+                }
                 navigator.mediaDevices.getUserMedia({ audio: true })
                     .then(stream => {
                         this.recorder = new MediaRecorder(stream);

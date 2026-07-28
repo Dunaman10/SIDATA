@@ -51,7 +51,8 @@ class Teacher extends Model
   protected static function booted()
   {
     static::deleted(function ($teacher) {
-      $teacher->user()->delete();
+      // Menghapus data asatidz tidak boleh menghapus data User utamanya
+      // $teacher->user()->delete();
     });
   }
 }

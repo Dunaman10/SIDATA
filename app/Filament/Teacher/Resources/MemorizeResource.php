@@ -254,7 +254,7 @@ class MemorizeResource extends Resource
 
           if (!$juz) return [];
 
-          return Surah::where('juz', $juz)
+          return Surah::whereRaw('FIND_IN_SET(?, juz)', [$juz])
             ->orderBy('id')
             ->pluck('surah_name', 'id');
         })

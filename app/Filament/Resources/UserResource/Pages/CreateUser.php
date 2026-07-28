@@ -25,19 +25,23 @@ class CreateUser extends CreateRecord
     return UserResource::getUrl('index'); // Redirect ke halaman daftar student
   }
 
-  protected function handleRecordCreation(array $data): Teacher
+  protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
   {
     $user = User::create([
       'name' => $data['name'],
       'email' => $data['email'],
       'phone' => $data['phone'],
       'password' => Hash::make($data['password']),
-      'role_id' => 2
+      'role_id' => $data['role_id']
     ]);
 
-    return Teacher::create([
-      'id_users' => $user->id
-    ]);
+    if ($data['role_id'] == 2) {
+      Teacher::create([
+        'id_users' => $user->id
+      ]);
+    }
+
+    return $user;
   }
 
   protected function afterCreate(): void
