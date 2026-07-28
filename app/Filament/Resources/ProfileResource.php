@@ -72,6 +72,10 @@ class ProfileResource extends Resource
               ->required()
               ->rows(3)
               ->placeholder('masukkan alamat pondok'),
+            TextInput::make('registration_link')
+              ->label('Link Form Pendaftaran (Google Drive / Form)')
+              ->url()
+              ->placeholder('masukkan link drive/form pendaftaran (https://...)'),
           ])
           ->columns(1),
 

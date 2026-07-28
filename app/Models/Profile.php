@@ -16,5 +16,6 @@ class Profile extends Model
     'phone',
     'email',
     'address',
+    'registration_link',
   ];
 }
