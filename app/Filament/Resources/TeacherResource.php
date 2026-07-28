@@ -31,7 +31,7 @@ class TeacherResource extends Resource
   public static function getEloquentQuery(): Builder
   {
     return parent::getEloquentQuery()
-      ->with(['user']);
+      ->with(['user', 'binaan.student']);
   }
   // public static function getEloquentQuery(): Builder
   // {
