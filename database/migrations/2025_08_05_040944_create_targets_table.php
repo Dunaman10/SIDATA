@@ -11,13 +11,15 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('targets', function (Blueprint $table) {
-      $table->id();
-      $table->integer('count_target');
-      $table->foreignId('id_class')->constrained('classes');
-      $table->integer('date_target');
-      $table->timestamps();
-    });
+    if (!Schema::hasTable('targets')) {
+      Schema::create('targets', function (Blueprint $table) {
+        $table->id();
+        $table->integer('count_target');
+        $table->foreignId('id_class')->constrained('classes');
+        $table->integer('date_target');
+        $table->timestamps();
+      });
+    }
   }
 
   /**
