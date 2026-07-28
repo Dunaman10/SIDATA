@@ -27,21 +27,13 @@ class CreateUser extends CreateRecord
 
   protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
   {
-    $user = User::create([
+    return User::create([
       'name' => $data['name'],
       'email' => $data['email'],
       'phone' => $data['phone'],
       'password' => Hash::make($data['password']),
       'role_id' => $data['role_id']
     ]);
-
-    if ($data['role_id'] == 2) {
-      Teacher::create([
-        'id_users' => $user->id
-      ]);
-    }
-
-    return $user;
   }
 
   protected function afterCreate(): void

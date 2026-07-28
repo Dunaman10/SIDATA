@@ -39,20 +39,30 @@ class TeacherResource extends Resource
   //     ->with(['user', 'classes']);
   // }
 
+  public static function canDelete(Model $record): bool
+  {
+    return false;
+  }
+
+  public static function canDeleteAny(): bool
+  {
+    return false;
+  }
+
   public static function form(Form $form): Form
   {
     return $form
+      ->columns(1)
       ->schema([
-        // Select::make('id_users')
-        //   ->label('Nama Guru')
-        //   ->relationship('user', 'name'),
         \Filament\Forms\Components\TextInput::make('student_quota')
           ->label('Batas Santri Binaan')
           ->numeric()
           ->default(3)
           ->required()
           ->minValue(1)
-          ->hint('Jumlah maksimal santri yang dapat dibimbing oleh ustadz ini'),
+          ->columnSpanFull()
+          ->placeholder('Masukkan kuota')
+          ->helperText('Jumlah maksimal santri yang dapat dibimbing oleh ustadz ini.'),
       ]);
   }
 
@@ -82,15 +92,14 @@ class TeacherResource extends Resource
         //
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
+        Tables\Actions\EditAction::make()
+          ->label('Edit Kuota')
+          ->modalHeading('Edit Kuota Santri')
+          ->modalIcon('heroicon-o-adjustments-horizontal')
+          ->modalWidth('sm'),
         Tables\Actions\ViewAction::make(),
-        Tables\Actions\DeleteAction::make(),
       ])
-      ->bulkActions([
-        Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
-        ]),
-      ]);
+      ->bulkActions([]);
   }
 
   public static function getRelations(): array

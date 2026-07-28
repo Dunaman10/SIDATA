@@ -60,6 +60,23 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
     return $this->hasMany(Student::class, 'parent');
   }
 
+  protected static function booted()
+  {
+    static::saved(function ($user) {
+      if ((int) $user->role_id === 2) {
+        if (!$user->teacher()->exists()) {
+          Teacher::create([
+            'id_users' => $user->id,
+          ]);
+        }
+      } else {
+        if ($user->teacher()->exists()) {
+          $user->teacher()->delete();
+        }
+      }
+    });
+  }
+
   /**
    * The attributes that should be hidden for serialization.
    *
