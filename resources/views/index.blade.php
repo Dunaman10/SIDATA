@@ -83,16 +83,24 @@
   </nav>
 
   @php
-      $bgUrl = asset('assets/admin/banner.jpg');
+      $primaryBgUrl = '/assets/admin/banner.jpg';
       if ($profile && $profile->banner_image) {
-          $bgUrl = str_starts_with($profile->banner_image, 'http')
+          $primaryBgUrl = str_starts_with($profile->banner_image, 'http')
               ? $profile->banner_image
-              : asset('storage/' . ltrim($profile->banner_image, '/'));
+              : '/storage/' . ltrim($profile->banner_image, '/');
       }
+      $fallbackBgUrl = asset('assets/admin/banner.jpg');
   @endphp
-  <section id="home" class="relative h-screen min-h-[500px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ $bgUrl }}'); -webkit-background-size: cover; background-size: cover; background-position: center center;">
+  <section id="home" class="relative h-screen min-h-[500px] overflow-hidden bg-slate-900">
+     {{-- Hero Background Image (HTML img for 100% iOS Safari / WebKit compatibility & automatic fallback) --}}
+     <img src="{{ $primaryBgUrl }}" 
+          alt="Banner Darut Tafsir" 
+          class="absolute inset-0 w-full h-full object-cover object-center z-0 pointer-events-none"
+          loading="eager"
+          onerror="this.onerror=null; this.src='{{ $fallbackBgUrl }}';">
+
      {{-- Overlay --}}
-     <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);"></div>
+     <div class="absolute inset-0 z-1 pointer-events-none" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 70%, rgba(15, 23, 42, 0.9) 100%);"></div>
 
      <div class="relative z-10 h-full flex items-center justify-center text-center px-4">
         <div class="max-w-4xl mx-auto mt-16">
