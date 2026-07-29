@@ -26,7 +26,15 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
-    if (request()->header('x-forwarded-proto') === 'https' || str_contains(request()->getHost(), 'herd.network') || config('app.env') === 'production') {
+    if (
+        request()->isSecure() ||
+        strtolower(request()->header('x-forwarded-proto', '')) === 'https' ||
+        request()->server('HTTPS') === 'on' ||
+        str_starts_with(config('app.url'), 'https://') ||
+        str_contains(request()->getHost(), 'santriqu.id') ||
+        str_contains(request()->getHost(), 'herd.network') ||
+        config('app.env') === 'production'
+    ) {
         URL::forceScheme('https');
     }
     

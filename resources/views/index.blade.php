@@ -82,8 +82,15 @@
       </div>
   </nav>
 
-  {{-- Hero Section --}}
-  <section id="home" class="relative h-screen bg-cover bg-center" style="background-image: url('{{ $profile && $profile->banner_image ? asset('storage/' . $profile->banner_image) : asset('assets/admin/banner.jpg') }}');">
+  @php
+      $bgUrl = asset('assets/admin/banner.jpg');
+      if ($profile && $profile->banner_image) {
+          $bgUrl = str_starts_with($profile->banner_image, 'http')
+              ? $profile->banner_image
+              : asset('storage/' . ltrim($profile->banner_image, '/'));
+      }
+  @endphp
+  <section id="home" class="relative h-screen min-h-[500px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ $bgUrl }}'); -webkit-background-size: cover; background-size: cover; background-position: center center;">
      {{-- Overlay --}}
      <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);"></div>
 
