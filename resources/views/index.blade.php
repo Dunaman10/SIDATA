@@ -93,8 +93,8 @@
   @endphp
   <section id="home" class="relative h-screen min-h-[500px] overflow-hidden bg-slate-900">
      {{-- Hero Background Image (HTML img for 100% iOS Safari / WebKit compatibility & automatic fallback) --}}
-     <img src="{{ $primaryBgUrl }}" 
-          alt="Banner Darut Tafsir" 
+     <img src="{{ $primaryBgUrl }}"
+          alt="Banner Darut Tafsir"
           class="absolute inset-0 w-full h-full object-cover object-center z-0 pointer-events-none"
           loading="eager"
           onerror="this.onerror=null; this.src='{{ $fallbackBgUrl }}';">
