@@ -46,16 +46,14 @@ class MentorStudentResource extends Resource
 
         Select::make('id_teacher')
           ->label('Nama Pembimbing')
-          ->relationship(
-            name: 'teacher',
-            titleAttribute: 'id_users',
-            modifyQueryUsing: fn($query) =>
-            $query
+          ->options(function () {
+            return Teacher::with('user')
               ->whereHas('user', fn($q) => $q->where('role_id', 2))
               ->withCount('binaan')
-              ->havingRaw('binaan_count < teachers.student_quota')
-          )
-          ->getOptionLabelFromRecordUsing(fn($record) => $record->user->name)
+              ->get()
+              ->filter(fn($teacher) => $teacher->binaan_count < $teacher->student_quota)
+              ->pluck('user.name', 'id');
+          })
           ->preload()
           ->searchable()
           ->required()

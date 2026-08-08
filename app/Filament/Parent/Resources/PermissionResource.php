@@ -31,6 +31,7 @@ class PermissionResource extends Resource
   public static function getEloquentQuery(): Builder
   {
     return parent::getEloquentQuery()
+      ->where('id_parent', auth()->id())
       ->with(['student', 'parent']);
   }
 

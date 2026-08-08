@@ -19,10 +19,11 @@ class CreatePermission extends CreateRecord
   {
     $user = auth()->user();
 
-    $student = $user->students->first();
-
     $data['id_parent'] = $user->id;
-    $data['id_student'] = $student ? $student->id : null;
+    if (empty($data['id_student'])) {
+      $student = $user->students->first();
+      $data['id_student'] = $student ? $student->id : null;
+    }
 
     return $data;
   }
