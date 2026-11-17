@@ -12,7 +12,7 @@ class RedirectByRole
   {
     if (Auth::check()) {
       $user = Auth::user();
-      switch ($user->role_id) {
+      switch ((int) $user->role_id) {
         case 1:
           return redirect()->route('filament.admin.pages.dashboard');
         case 2:

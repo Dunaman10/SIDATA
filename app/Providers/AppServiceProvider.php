@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Responses\CustomLoginResponse;
 use App\Http\Responses\CustomLogoutResponse;
 use App\Livewire\EditProfileForm;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
    */
   public function register(): void
   {
+    $this->app->singleton(LoginResponse::class, CustomLoginResponse::class);
     $this->app->singleton(LogoutResponse::class, CustomLogoutResponse::class);
   }
 

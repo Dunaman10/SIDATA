@@ -15,8 +15,13 @@ class OnlyTeacher
    */
   public function handle(Request $request, Closure $next): Response
   {
-    if (auth()->user() && auth()->user()->role_id !== 2) {
-      abort(403, 'Unauthorized');
+    if (auth()->check() && (int) auth()->user()->role_id !== 2) {
+      return match ((int) auth()->user()->role_id) {
+        1 => redirect()->route('filament.admin.pages.dashboard'),
+        3 => redirect()->route('filament.parent.pages.dashboard'),
+        4 => redirect()->route('filament.keamanan.pages.dashboard'),
+        default => abort(403, 'Unauthorized'),
+      };
     }
     return $next($request);
   }

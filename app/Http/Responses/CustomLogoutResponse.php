@@ -11,6 +11,7 @@ class CustomLogoutResponse implements LogoutResponse
 {
   public function toResponse($request)
   {
+    $request->session()->forget('url.intended');
     return redirect('/auth/login');
   }
 }
